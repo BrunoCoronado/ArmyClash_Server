@@ -5,6 +5,7 @@
  */
 package main;
 
+import estructuras.listaDobleCircular.ListaDobleCircular;
 import java.util.Scanner;
 import rabbit.Enviar;
 
@@ -12,6 +13,7 @@ import rabbit.Enviar;
  *
  * @author bruno
  */
+//CLIENTE
 public class Main {
 
     /**
@@ -19,7 +21,7 @@ public class Main {
      */
     //SERVIDOR
     public static void main(String[] args) {
-        Enviar enviar = new Enviar();
+        /*Enviar enviar = new Enviar();
         Scanner scanner = new Scanner(System.in);
         try{
             int maximo = 0;
@@ -31,6 +33,22 @@ public class Main {
             }
         }catch(Exception ex){
             ex.printStackTrace();
-        }
+        }*/
+        ListaDobleCircular listaDobleCircular = new ListaDobleCircular();
+        listaDobleCircular.insertar(10);
+        listaDobleCircular.mostrar();
+        listaDobleCircular.mostrarInverso();
+        listaDobleCircular.insertar(20);
+        listaDobleCircular.mostrar();
+        listaDobleCircular.mostrarInverso();
+        listaDobleCircular.insertar(30);
+        listaDobleCircular.mostrar();
+        listaDobleCircular.mostrarInverso();
+        listaDobleCircular.insertar(40);
+        listaDobleCircular.mostrar();
+        listaDobleCircular.mostrarInverso();
+        listaDobleCircular.insertar(50);
+        listaDobleCircular.mostrar();
+        listaDobleCircular.mostrarInverso();
     }
 }
