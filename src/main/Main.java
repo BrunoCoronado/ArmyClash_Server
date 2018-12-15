@@ -35,20 +35,20 @@ public class Main {
             ex.printStackTrace();
         }*/
         ListaDobleCircular listaDobleCircular = new ListaDobleCircular();
-        listaDobleCircular.insertar(10);
+        listaDobleCircular.insertar(10,5);
         listaDobleCircular.mostrar();
-        listaDobleCircular.mostrarInverso();
-        listaDobleCircular.insertar(20);
+        listaDobleCircular.mostrarPuntas();
+        listaDobleCircular.insertar(20,1);
         listaDobleCircular.mostrar();
-        listaDobleCircular.mostrarInverso();
-        listaDobleCircular.insertar(30);
+        listaDobleCircular.mostrarPuntas();
+        listaDobleCircular.insertar(30,4);
         listaDobleCircular.mostrar();
-        listaDobleCircular.mostrarInverso();
-        listaDobleCircular.insertar(40);
+        listaDobleCircular.mostrarPuntas();
+        listaDobleCircular.insertar(40,3);
         listaDobleCircular.mostrar();
-        listaDobleCircular.mostrarInverso();
-        listaDobleCircular.insertar(50);
+        listaDobleCircular.mostrarPuntas();
+        listaDobleCircular.insertar(50,2);
         listaDobleCircular.mostrar();
-        listaDobleCircular.mostrarInverso();
+        listaDobleCircular.mostrarPuntas();
     }
 }

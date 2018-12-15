@@ -11,11 +11,13 @@ package estructuras.listaDobleCircular;
  */
 public class NodoLC {
     Object valor;
+    int capa;
     NodoLC anterior;
     NodoLC siguiente;
 
-    public NodoLC(Object valor) {
+    public NodoLC(Object valor, int capa) {
         this.valor = valor;
+        this.capa = capa;
         anterior = null;
         siguiente = null;
     }
