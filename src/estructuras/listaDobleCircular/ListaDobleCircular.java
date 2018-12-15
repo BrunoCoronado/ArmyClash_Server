@@ -70,14 +70,54 @@ public class ListaDobleCircular {
         }
     }
     
+    public void eliminar(int capa){
+        if(primero != null){
+            NodoLC tmp = primero;
+            Boolean encontrado = false;
+            do{
+                if(tmp.capa == capa){
+                    encontrado = true;
+                    break;
+                }
+                tmp = tmp.siguiente;
+            }while(tmp != primero);
+            if(encontrado){
+                if(tmp.anterior != tmp.siguiente && tmp != tmp.siguiente){
+                    NodoLC anterior = tmp.anterior;
+                    anterior.siguiente = tmp.siguiente;
+                    tmp.siguiente.anterior = anterior;
+                    if(tmp == primero){
+                        primero = anterior.siguiente;
+                    }
+                    if(tmp == ultimo){
+                        ultimo = anterior;
+                    }
+                }else{
+                    if(tmp != tmp.siguiente){
+                        primero = tmp.anterior;
+                        ultimo = primero;
+                        primero.anterior = ultimo;
+                        primero.siguiente = ultimo;
+                        ultimo.anterior = primero;
+                        ultimo.siguiente = primero;
+                    }else{
+                        primero = null;
+                        ultimo = null;
+                    }
+                }
+            }
+        }
+    }
     
     public void mostrar(){
-        NodoLC tmp = primero;
-        do{
-            System.out.print(tmp.valor + " - CAPA "+tmp.capa+"  ");
-            tmp = tmp.siguiente;
-        }while(tmp != primero);
-        System.out.println();
+        if(primero != null){
+            NodoLC tmp = primero;
+            do{
+                System.out.print(tmp.valor + " - CAPA "+tmp.capa+"  ");
+                tmp = tmp.siguiente;
+            }while(tmp != primero);
+            System.out.println();
+        }
     }
     
     public void mostrarInverso(){
@@ -90,8 +130,10 @@ public class ListaDobleCircular {
     }
     
     public void mostrarPuntas(){
-        System.out.println("PRIMERO "+primero.capa+" ANTERIOR PRIMERO "+primero.anterior.capa);
-        System.out.println("ULTIMO "+ultimo.capa+" SIGUIENTE ULTIMO "+ultimo.siguiente.capa);
-        System.out.println();
+        if(primero != null){
+            System.out.println("PRIMERO "+primero.capa+" ANTERIOR PRIMERO "+primero.anterior.capa);
+            System.out.println("ULTIMO "+ultimo.capa+" SIGUIENTE ULTIMO "+ultimo.siguiente.capa);
+            System.out.println();
+        }
     }
 }

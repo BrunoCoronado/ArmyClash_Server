@@ -50,5 +50,20 @@ public class Main {
         listaDobleCircular.insertar(50,2);
         listaDobleCircular.mostrar();
         listaDobleCircular.mostrarPuntas();
+        listaDobleCircular.eliminar(3);
+        listaDobleCircular.mostrar();
+        listaDobleCircular.mostrarPuntas();
+        listaDobleCircular.eliminar(1);
+        listaDobleCircular.mostrar();
+        listaDobleCircular.mostrarPuntas();
+        listaDobleCircular.eliminar(5);
+        listaDobleCircular.mostrar();
+        listaDobleCircular.mostrarPuntas();
+        listaDobleCircular.eliminar(4);
+        listaDobleCircular.mostrar();
+        listaDobleCircular.mostrarPuntas();
+        listaDobleCircular.eliminar(2);
+        listaDobleCircular.mostrar();
+        listaDobleCircular.mostrarPuntas();
     }
 }
