@@ -20,10 +20,19 @@ public class NodoA {
     
     NodoA izq;
     NodoA der;
+    NodoA padre;
 
     public NodoA(int id) {
         this.id = id;
         izq = null;
         der = null;
+        padre = null;
+    }
+    
+    public NodoA(int id, NodoA padre) {
+        this.id = id;
+        izq = null;
+        der = null;
+        this.padre = padre;
     }
 }
