@@ -120,15 +120,6 @@ public class ListaDobleCircular {
         }
     }
     
-    public void mostrarInverso(){
-        NodoLC tmp = ultimo;
-        do{
-            System.out.print(tmp.valor + "    ");
-            tmp = tmp.anterior;
-        }while(tmp != ultimo);
-        System.out.println();
-    }
-    
     public void mostrarPuntas(){
         if(primero != null){
             System.out.println("PRIMERO "+primero.capa+" ANTERIOR PRIMERO "+primero.anterior.capa);
