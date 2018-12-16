@@ -15,6 +15,7 @@ public class NodoCelda {
     NodoCelda abajo;
     NodoCelda izquierda;
     NodoCelda derecha;
+    int contador;
     int numColumna;
     int numFila;
 
@@ -22,6 +23,7 @@ public class NodoCelda {
         this.valor = contenido;
         this.numColumna = numColumna;
         this.numFila = numFila;
+        contador = 0;
         arriba = null;
         abajo = null;
         izquierda = null;

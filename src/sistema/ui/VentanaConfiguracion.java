@@ -5,8 +5,8 @@
  */
 package sistema.ui;
 
-import java.io.File;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import sistema.archivos.Archivo;
 
 /**
  *
@@ -65,6 +65,7 @@ public class VentanaConfiguracion extends javax.swing.JFrame {
         setTitle("ArmyClash - Servidor");
         setResizable(false);
 
+        txtLog.setEditable(false);
         txtLog.setColumns(20);
         txtLog.setRows(5);
         jScrollPane1.setViewportView(txtLog);
@@ -188,12 +189,12 @@ public class VentanaConfiguracion extends javax.swing.JFrame {
     private void btnCargarArchivo(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarArchivo
         int returnVal = fileChooser.showOpenDialog(this);
         if (returnVal == fileChooser.APPROVE_OPTION) {
-            File archivo = fileChooser.getSelectedFile();
-            try {
-                System.out.println(archivo.getAbsolutePath());
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            Archivo archivo = new Archivo();
+            if(CboxCargaArchivos.getSelectedIndex() < 5)
+                archivo.cargarCapa(fileChooser.getSelectedFile().getAbsolutePath(), CboxCargaArchivos.getSelectedIndex());
+            else//se le resta 4 debido a que hay 4 opciones antes, entonces el index que devuelve es un +4 hacia el numero de jugador que deberia ser 1 o 2
+                archivo.cargarTropas(fileChooser.getSelectedFile().getAbsolutePath(), (CboxCargaArchivos.getSelectedIndex() - 4));
+            txtLog.setText(txtLog.getText() + archivo.log);
         }
     }//GEN-LAST:event_btnCargarArchivo
 
@@ -201,9 +202,9 @@ public class VentanaConfiguracion extends javax.swing.JFrame {
         fileChooser.resetChoosableFileFilters();
         FileNameExtensionFilter filtro;
         if(CboxCargaArchivos.getSelectedIndex() < 5)
-            filtro = new FileNameExtensionFilter("map", ".map");
+            filtro = new FileNameExtensionFilter(".map", "map");
         else
-            filtro = new FileNameExtensionFilter("army", ".army");
+            filtro = new FileNameExtensionFilter(".army", "army");
         fileChooser.setFileFilter(filtro);
     }//GEN-LAST:event_CboxCargaArchivosItemStateChanged
 

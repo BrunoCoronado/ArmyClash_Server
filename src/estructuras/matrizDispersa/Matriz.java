@@ -73,22 +73,6 @@ public class Matriz {
         }
     }
     
-//    public void insertarCelda(Object valor, int numColumna, int numFila){
-//        NodoColumna tmpColumna = primeroColumna;
-//        NodoFila tmpFila = primeroFila;
-//        NodoCelda nuevo = new NodoCelda(valor, numColumna,numFila);
-//        
-//        while(tmpColumna != null){
-//            if(tmpColumna.numColumna == numColumna){
-//                NodoCelda tmpCelda = tmpColumna.abajo;
-//                if(tmpCelda == null){
-//                    tmpColumna.abajo = nuevo;
-//                }
-//            }
-//            tmpColumna = tmpColumna.siguiente;
-//        }
-//    }
-    
     private void ordenarFilas(){
         if(primeroFila != null){
           NodoFila actual = primeroFila;
@@ -127,6 +111,32 @@ public class Matriz {
         }
     }
     
+    private void ordenarCeldas(){//******************************************
+        
+    }
+    
+    public boolean existeFila(int numFila){
+        NodoFila tmp = primeroFila; 
+        while(tmp != null){
+            if(tmp.numFila == numFila){
+                return true;
+            }
+            tmp = tmp.abajo;
+        }
+        return false;
+    }
+    
+    public boolean existeColumna(int numColumna){
+        NodoColumna tmp = primeroColumna; 
+        while(tmp != null){
+            if(tmp.numColumna == numColumna){
+                return true;
+            }
+            tmp = tmp.siguiente;
+        }
+        return false;
+    }
+    
     public void mostrarFilas(){
         NodoFila tmp = primeroFila;
         while(tmp != null){
@@ -163,25 +173,16 @@ public class Matriz {
         }
     }
     
-    public boolean existeFila(int numFila){
-        NodoFila tmp = primeroFila; 
-        while(tmp != null){
-            if(tmp.numFila == numFila){
-                return true;
+    public void mostrarMatriz(){//vamos a mostrar filas enteras de la columna
+        NodoFila tmpFila = primeroFila;
+        while(tmpFila != null){
+            NodoCelda tmpCelda = tmpFila.derecha;
+            while(tmpCelda != null){
+                System.out.print("["+tmpCelda.valor+"("+tmpCelda.numColumna+","+tmpCelda.numFila+")]");
+                tmpCelda = tmpCelda.derecha;
             }
-            tmp = tmp.abajo;
+            System.out.println();
+            tmpFila = tmpFila.abajo;
         }
-        return false;
-    }
-    
-    public boolean existeColumna(int numColumna){
-        NodoColumna tmp = primeroColumna; 
-        while(tmp != null){
-            if(tmp.numColumna == numColumna){
-                return true;
-            }
-            tmp = tmp.siguiente;
-        }
-        return false;
     }
 }

@@ -166,4 +166,33 @@ public class Arbol {
             System.out.print(tmp.id +"  ");
         }
     }
+    
+    public boolean  existe(int id){
+        if(raiz != null){
+            if(raiz.id != id){
+                return existe(id, raiz);
+            }
+            return true;
+        }
+        return false;
+    }
+    
+    private boolean existe(int id, NodoA tmp){
+        if(id < tmp.id){
+            if(tmp.izq != null){
+                if(tmp.izq.id == id)
+                    return true;
+                return existe(id, tmp.izq);
+            }else
+                return false;
+        }else if(id > tmp.id){
+            if(tmp.der != null){
+                if(tmp.der.id == id)
+                    return true;
+                return existe(id, tmp.der);
+            }else
+                return false;
+        }
+        return false;
+    }
 }

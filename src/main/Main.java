@@ -23,6 +23,11 @@ public class Main {
      * @param args the command line arguments
      */
     //SERVIDOR
+    
+    public static ListaDobleCircular capas = new ListaDobleCircular();
+    public static Arbol arbolJugador1 = new Arbol();
+    public static Arbol arbolJugador2 = new Arbol();
+    
     public static void main(String[] args) {
         /*Enviar enviar = new Enviar();
         Scanner scanner = new Scanner(System.in);

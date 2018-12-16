@@ -13,24 +13,6 @@ public class ListaDobleCircular {
     NodoLC primero = null;
     NodoLC ultimo = null;
     
-//    public void insertarC(Object valor){
-//        if(primero == null){
-//            //primero = new NodoLC(valor);
-//            ultimo = primero;
-//            primero.anterior = ultimo;
-//            primero.siguiente = ultimo;
-//            ultimo.anterior = primero;
-//            ultimo.siguiente = primero;
-//        }else{
-//            NodoLC tmp = ultimo;
-//            //ultimo = new NodoLC(valor);
-//            ultimo.siguiente = primero;
-//            ultimo.anterior = tmp;
-//            tmp.siguiente = ultimo;
-//            primero.anterior = ultimo;
-//        }
-//    }
-    
     public void insertar(Object valor, int capa){
         if(primero == null){
             primero = new NodoLC(valor, capa);
@@ -113,7 +95,7 @@ public class ListaDobleCircular {
         if(primero != null){
             NodoLC tmp = primero;
             do{
-                System.out.print(tmp.valor + " - CAPA "+tmp.capa+"  ");
+                System.out.print("CAPA "+tmp.capa+"  ");
                 tmp = tmp.siguiente;
             }while(tmp != primero);
             System.out.println();
@@ -125,6 +107,32 @@ public class ListaDobleCircular {
             System.out.println("PRIMERO "+primero.capa+" ANTERIOR PRIMERO "+primero.anterior.capa);
             System.out.println("ULTIMO "+ultimo.capa+" SIGUIENTE ULTIMO "+ultimo.siguiente.capa);
             System.out.println();
+        }
+    }
+    
+    public boolean  existe(int capa){
+        if(primero != null){
+            NodoLC tmp = primero;
+            do{
+                if(tmp.capa == capa){
+                    return true;
+                }
+                tmp = tmp.siguiente;
+            }while(tmp != primero);
+        }
+        return false;
+    } 
+    
+    public void sobrescribir(Object valor, int capa){
+        if(primero != null){
+            NodoLC tmp = primero;
+            do{
+                if(tmp.capa == capa){
+                    tmp.valor = valor;
+                    break;
+                }
+                tmp = tmp.siguiente;
+            }while(tmp != primero);
         }
     }
 }
