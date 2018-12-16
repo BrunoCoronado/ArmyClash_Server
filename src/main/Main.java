@@ -10,6 +10,7 @@ import estructuras.listaDobleCircular.ListaDobleCircular;
 import estructuras.matrizDispersa.Matriz;
 import java.util.Scanner;
 import rabbit.Enviar;
+import sistema.bean.Tropa;
 import sistema.ui.VentanaConfiguracion;
 
 /**
@@ -75,21 +76,21 @@ public class Main {
 //        listaDobleCircular.mostrarPuntas();
 
 //        Arbol arbol = new Arbol();
-//        arbol.insertar(50);
-//        arbol.insertar(25);
-//        arbol.insertar(75);
-//        arbol.insertar(15);
-//        arbol.insertar(35);
-//        arbol.insertar(65);
-//        arbol.insertar(100);
-//        arbol.insertar(10);
-//        arbol.insertar(20);
-//        arbol.insertar(30);
-//        arbol.insertar(40);
-//        arbol.insertar(60);
-//        arbol.insertar(70);
-//        arbol.insertar(80);
-//        arbol.insertar(110);
+//        arbol.insertar(new Tropa(50));
+//        arbol.insertar(new Tropa(25));
+//        arbol.insertar(new Tropa(75));
+//        arbol.insertar(new Tropa(15));
+//        arbol.insertar(new Tropa(35));
+//        arbol.insertar(new Tropa(65));
+//        arbol.insertar(new Tropa(100));
+//        arbol.insertar(new Tropa(10));
+//        arbol.insertar(new Tropa(20));
+//        arbol.insertar(new Tropa(30));
+//        arbol.insertar(new Tropa(40));
+//        arbol.insertar(new Tropa(60));
+//        arbol.insertar(new Tropa(70));
+//        arbol.insertar(new Tropa(80));
+//        arbol.insertar(new Tropa(110));
 //        arbol.inorden();
 //        System.out.println();
 //        //arbol.preorden();
@@ -180,7 +181,6 @@ public class Main {
 //            matriz.mostrarCelda(11, 2);
 
             VentanaConfiguracion configuracion = new VentanaConfiguracion();
-            configuracion.setVisible(true);
             
     }
 }

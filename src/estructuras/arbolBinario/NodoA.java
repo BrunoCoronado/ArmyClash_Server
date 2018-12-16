@@ -5,34 +5,29 @@
  */
 package estructuras.arbolBinario;
 
+import sistema.bean.Tropa;
+
 /**
  *
  * @author bruno
  */
 public class NodoA {
-    int posicionX;
-    int posicionY;
-    int id;
-    int vida;
-    int alcanceMovimiento;
-    int ataque;
-    int alcanceAtaque;
-    
+    Tropa tropa;
     NodoA izq;
     NodoA der;
     NodoA padre;
 
-    public NodoA(int id) {
-        this.id = id;
+    public NodoA(Tropa tropa) {
+        this.tropa = tropa;
         izq = null;
         der = null;
         padre = null;
     }
-    
-    public NodoA(int id, NodoA padre) {
-        this.id = id;
+
+    public NodoA(Tropa tropa, NodoA padre) {
+        this.tropa = tropa;
+        this.padre = padre;
         izq = null;
         der = null;
-        this.padre = padre;
     }
 }

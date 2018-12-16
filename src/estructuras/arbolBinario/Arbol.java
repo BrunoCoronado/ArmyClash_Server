@@ -5,6 +5,8 @@
  */
 package estructuras.arbolBinario;
 
+import sistema.bean.Tropa;
+
 /**
  *
  * @author bruno
@@ -12,39 +14,39 @@ package estructuras.arbolBinario;
 public class Arbol {
     NodoA raiz = null;
     
-    public void insertar(int id){
+    public void insertar(Tropa tropa){
         if(raiz != null)
-            insertar(id, raiz);
+            insertar(tropa, raiz);
         else
-            raiz = new NodoA(id);
+            raiz = new NodoA(tropa);
     }
     
-    private void insertar(int id, NodoA tmp){
-        if(id < tmp.id){//insertamos a la izquierda del nodo
+    private void insertar(Tropa tropa, NodoA tmp){
+        if(tropa.getId() < tmp.tropa.getId()){//insertamos a la izquierda del nodo
             if(tmp.izq != null)
-                insertar(id, tmp.izq);
+                insertar(tropa, tmp.izq);
             else{
-                tmp.izq = new NodoA(id, tmp);
+                tmp.izq = new NodoA(tropa, tmp);
             }
-        }else if(id > tmp.id){//insertamos a la derecha del nodo
+        }else if(tropa.getId() > tmp.tropa.getId()){//insertamos a la derecha del nodo
             if(tmp.der != null)
-                insertar(id, tmp.der);
+                insertar(tropa, tmp.der);
             else
-                tmp.der = new NodoA(id, tmp);
+                tmp.der = new NodoA(tropa, tmp);
         }
     }
     
     public void eliminar(int id){
         if(raiz != null){
-            if(id != raiz.id)
+            if(id != raiz.tropa.getId())
                 eliminar(id, raiz);
         }
     }
     
     private void eliminar(int id, NodoA tmp){
-        if(id < tmp.id){//si es menor procedo a analizar el lado izquierdo
+        if(id < tmp.tropa.getId()){//si es menor procedo a analizar el lado izquierdo
             if(tmp.izq != null){//si el hijo izquierdo tiene contenido
-                if(tmp.izq.id != id){//si el hijo izquierdo no es el que busco
+                if(tmp.izq.tropa.getId() != id){//si el hijo izquierdo no es el que busco
                     eliminar(id, tmp.izq);//sigo buscando en el lado izquierdo 
                 }else{//si es el que busco eliminar hijo izquierdo
                     NodoA eliminar = tmp.izq;//guardo el nodo que quiero eliminar
@@ -58,16 +60,16 @@ public class Arbol {
                         tmp.izq = eliminar.der;//pasos los del nodo eliminado al padre
                     }else{//al llegar a este punto sabemos que tiene dos hijos
                         NodoA predecesor = predecesor(eliminar.izq);//buscamos el mayor de los menores
-                        int aux = eliminar.id;//guardamos el valor del nodo que vamos a eliminar
-                        eliminar.id = predecesor.id;//cambiamos el valore del nodo que vamos a eliminar con el valor del predecesor
-                        predecesor.id = aux;//cambiamos el valore del predecesor con el valore del nodo que vamos a eliminar
-                        eliminarHijo(aux, predecesor.padre.id, raiz);//eliminamos el nodo predecesor con el valor cambiado partiendo del padre del predecesor
+                        Tropa aux = eliminar.tropa;//guardamos el valor del nodo que vamos a eliminar
+                        eliminar.tropa = predecesor.tropa;//cambiamos el valore del nodo que vamos a eliminar con el valor del predecesor
+                        predecesor.tropa = aux;//cambiamos el valore del predecesor con el valore del nodo que vamos a eliminar
+                        eliminarHijo(aux.getId(), predecesor.padre.tropa.getId(), raiz);//eliminamos el nodo predecesor con el valor cambiado partiendo del padre del predecesor
                     }
                 }
             }
-       }else if(id > tmp.id){//si es mayor procedo a analizar el lado derecho
+       }else if(id > tmp.tropa.getId()){//si es mayor procedo a analizar el lado derecho
             if(tmp.der != null){//si el hijo derecho tiene contenido
-                if(tmp.der.id != id){//si el hijo derecho no es el que busco
+                if(tmp.der.tropa.getId() != id){//si el hijo derecho no es el que busco
                     eliminar(id, tmp.der);//sigo buscando en el lado derecho
                 }else{//si es el que busco eliminar hijo derecho
                     NodoA eliminar = tmp.der;
@@ -79,10 +81,10 @@ public class Arbol {
                         tmp.izq = eliminar.der;
                     }else{//al llegar a este punto sabemos que tiene dos hijos
                         NodoA predecesor = predecesor(eliminar.izq);//buscamos el mayor de los menores
-                        int aux = eliminar.id;//guardamos el valor del nodo que vamos a eliminar
-                        eliminar.id = predecesor.id;//cambiamos el valore del nodo que vamos a eliminar con el valor del predecesor
-                        predecesor.id = aux;//cambiamos el valore del predecesor con el valore del nodo que vamos a eliminar
-                        eliminarHijo(aux, predecesor.padre.id, raiz);//eliminamos el nodo predecesor con el valor cambiado partiendo del padre del predecesor
+                        Tropa aux = eliminar.tropa;//guardamos el valor del nodo que vamos a eliminar
+                        eliminar.tropa = predecesor.tropa;//cambiamos el valore del nodo que vamos a eliminar con el valor del predecesor
+                        predecesor.tropa = aux;//cambiamos el valore del predecesor con el valore del nodo que vamos a eliminar
+                        eliminarHijo(aux.getId(), predecesor.padre.tropa.getId(), raiz);//eliminamos el nodo predecesor con el valor cambiado partiendo del padre del predecesor
                     }
                 }
             }
@@ -90,15 +92,15 @@ public class Arbol {
     }
     
     private void eliminarHijo(int id, int padre, NodoA tmp){//tenemos que buscar al padre en el arbol
-        if(padre < tmp.id){//verificamos si es menor
+        if(padre < tmp.tropa.getId()){//verificamos si es menor
             if(tmp.izq != null)//verificamos que el lador izquierdo a donde vamos no sea nulo
                 eliminarHijo(id, padre, tmp.izq);//seguimos buscando
-        }else if(padre > tmp.id){//verificamos si es mayor
+        }else if(padre > tmp.tropa.getId()){//verificamos si es mayor
             if(tmp.der != null)//verificamos que el lado derecho a donde vamos no sea nulo
-                    eliminarHijo(id, padre, tmp.der);//seguimos buscando
+                eliminarHijo(id, padre, tmp.der);//seguimos buscando
         }else{//cuando lleguemos a este punto quiere decir que estamos en el padre
             if(tmp.izq != null){//analizamos hijo izquierdo
-                if(tmp.izq.id == id){//verificamos que sea el hijo que buscamos
+                if(tmp.izq.tropa.getId() == id){//verificamos que sea el hijo que buscamos
                     NodoA eliminar = tmp.izq;//guardo el nodo que quiero eliminar
                     if(eliminar.izq == null && eliminar.der == null){//verifico si es un nodo hoja, si lo es->
                         tmp.izq = null;//elimino la hoja
@@ -111,7 +113,7 @@ public class Arbol {
                     }
                 }
             }else if(tmp.der != null){//analizamos hijo derecho
-                if(tmp.der.id == id){//verificamos que sea el hijo que buscamos
+                if(tmp.der.tropa.getId() == id){//verificamos que sea el hijo que buscamos
                     NodoA eliminar = tmp.der;
                     if(eliminar.izq == null && eliminar.der == null){//verifico si es un nodo hoja, si lo es->
                         tmp.der = null;//elimino la hoja
@@ -133,11 +135,12 @@ public class Arbol {
     
     public void preorden(){
         preorden(raiz);
+        System.out.println();
     }
     
     private void preorden(NodoA tmp){
         if(tmp != null){
-            System.out.print(tmp.id +"  ");
+            System.out.print(tmp.tropa.getId() +"  ");
             preorden(tmp.izq);
             preorden(tmp.der);
         }
@@ -145,31 +148,33 @@ public class Arbol {
     
     public void inorden(){
         inorden(raiz);
+        System.out.println();
     }
     
     private void inorden(NodoA tmp){
         if(tmp != null){
             inorden(tmp.izq);
-            System.out.print(tmp.id +"  ");
+            System.out.print(tmp.tropa.getId() +"  ");
             inorden(tmp.der);
         }
     }
     
     public void postorden(){
         postorden(raiz);
+        System.out.println();
     }
     
     private void postorden(NodoA tmp){
         if(tmp != null){
             postorden(tmp.izq);
             postorden(tmp.der);
-            System.out.print(tmp.id +"  ");
+            System.out.print(tmp.tropa.getId() +"  ");
         }
     }
     
     public boolean  existe(int id){
         if(raiz != null){
-            if(raiz.id != id){
+            if(raiz.tropa.getId() != id){
                 return existe(id, raiz);
             }
             return true;
@@ -178,16 +183,16 @@ public class Arbol {
     }
     
     private boolean existe(int id, NodoA tmp){
-        if(id < tmp.id){
+        if(id < tmp.tropa.getId()){
             if(tmp.izq != null){
-                if(tmp.izq.id == id)
+                if(tmp.izq.tropa.getId() == id)
                     return true;
                 return existe(id, tmp.izq);
             }else
                 return false;
-        }else if(id > tmp.id){
+        }else if(id > tmp.tropa.getId()){
             if(tmp.der != null){
-                if(tmp.der.id == id)
+                if(tmp.der.tropa.getId() == id)
                     return true;
                 return existe(id, tmp.der);
             }else

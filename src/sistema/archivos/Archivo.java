@@ -9,6 +9,7 @@ import estructuras.arbolBinario.Arbol;
 import estructuras.matrizDispersa.Matriz;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import sistema.bean.Tropa;
 
 /**
  *
@@ -34,16 +35,16 @@ public class Archivo {
                 }
                 contenido = reader.readLine();
             }
-           //mapa.mostrarMatriz();
            if(main.Main.capas.existe(numCapa))
                main.Main.capas.sobrescribir(capa, numCapa);
            else
                 main.Main.capas.insertar(capa, numCapa);
-            main.Main.capas.mostrar();
             if(error){
                 log += "!!!ERROR - CONTENIDO INVALIDO!!!";
             }
             log += "***CAPA CARGADA***\n";
+            capa.mostrarFilas();
+            capa.mostrarMatriz();
         }catch(Exception ex){
             ex.printStackTrace();
             log += "!!!ERROR DURANTE CARGA!!!\n";
@@ -65,6 +66,7 @@ public class Archivo {
             capa.insertarCelda(tipo, columna, fila);
         }catch(Exception ex){
             ex.printStackTrace();
+            log += "!!!ERROR AGREGANDO NODO!!!\n";
         }
     }
     
@@ -107,16 +109,18 @@ public class Archivo {
     }
     
     private void llenarArbol(String contenido){
-        /*int columna = Integer.parseInt(contenido.substring(0, contenido.indexOf(",")));
-        int fila = Integer.parseInt()
-        int id;
-        String tipo;*/
-        String parteA = contenido.substring(0, contenido.indexOf(";"));
-        String tipo = contenido.substring(contenido.indexOf(";")+1);
-        String[] partesA = parteA.split(",");
-        int columna = Integer.parseInt(partesA[0]);
-        int fila = Integer.parseInt(partesA[1]);
-        int id = Integer.parseInt(partesA[2]);
-        log += "Columna: "+columna+" Fila: "+fila+" ID: "+id+" Tipo: "+tipo+"\n";
+        try{
+            String parteA = contenido.substring(0, contenido.indexOf(";"));
+            String tipo = contenido.substring(contenido.indexOf(";")+1);
+            String[] partesA = parteA.split(",");
+            int columna = Integer.parseInt(partesA[0]);
+            int fila = Integer.parseInt(partesA[1]);
+            int id = Integer.parseInt(partesA[2]);
+            log += "Columna: "+columna+" Fila: "+fila+" ID: "+id+" Tipo: "+tipo+"\n";
+            arbol.insertar(new Tropa(id, tipo, columna, fila));
+        }catch(Exception ex){
+            ex.printStackTrace();
+            log += "!!!ERROR AGREGANDO NODO!!!\n";
+        }
     }
 }
