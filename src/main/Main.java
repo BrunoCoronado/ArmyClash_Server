@@ -5,11 +5,14 @@
  */
 package main;
 
+import com.rabbitmq.client.*;
 import estructuras.arbolBinario.Arbol;
+import estructuras.cola.Cola;
 import estructuras.listaDobleCircular.ListaDobleCircular;
 import estructuras.matrizDispersa.Matriz;
 import java.util.Scanner;
-import rabbit.Enviar;
+import rabbit.AdministradorRespuestas;
+import rabbit.Receptor;
 import sistema.bean.Tropa;
 import sistema.ui.VentanaConfiguracion;
 
@@ -29,7 +32,9 @@ public class Main {
     public static Arbol arbolJugador1 = new Arbol();
     public static Arbol arbolJugador2 = new Arbol();
     
-    public static void main(String[] args) {
+    public static Cola peticiones = new Cola();
+    
+    public static void main(String[] args) throws Exception{
         /*Enviar enviar = new Enviar();
         Scanner scanner = new Scanner(System.in);
         try{
@@ -135,14 +140,14 @@ public class Main {
 //        System.out.println();
 
 
-//            Matriz matriz = new Matriz();
+            //Matriz matriz = new Matriz();
 //            matriz.mostrarCelda(10, 10);
 //            if(matriz.existeFila(0))
 //                System.out.println("existe");
 //            matriz.mostrarFilas();
 //            matriz.agregarFila(10);
 //            matriz.mostrarFilas();
-//            matriz.agregarFila(2);
+            //matriz.agregarFila(2);
 //            matriz.mostrarFilas();
 //            matriz.agregarFila(15);
 //            matriz.mostrarFilas();
@@ -154,7 +159,7 @@ public class Main {
 //            if(matriz.existeColumna(0))
 //                System.out.println("existe");
 //            matriz.mostrarColumnas();
-//            matriz.agregarColumna(2);
+            //matriz.agregarColumna(2);
 //            matriz.mostrarColumnas();
 //            matriz.agregarColumna(1);
 //            matriz.mostrarColumnas();
@@ -169,7 +174,10 @@ public class Main {
 //            if(matriz.existeColumna(11))
 //                System.out.println("existe");
 //            
-//            matriz.insertarCelda(1, 1, 1);
+//            matriz.insertarCelda(1, 2, 2);
+//            matriz.mostrarMatriz();
+//            matriz.insertarCelda(3, 2, 2);
+//            matriz.mostrarMatriz();
 //            matriz.insertarCelda(2, 10, 10);
 //            matriz.insertarCelda(3, 10, 15);
 //            matriz.insertarCelda(4, 11, 1);
@@ -179,8 +187,12 @@ public class Main {
 //            matriz.mostrarCelda(10, 15);
 //            matriz.mostrarCelda(11, 1);
 //            matriz.mostrarCelda(11, 2);
-
-            VentanaConfiguracion configuracion = new VentanaConfiguracion();
-            
+//            Consumir consumir = new Consumir();
+//            consumir.start();
+        Receptor receptor = new Receptor();
+        receptor.start();
+        AdministradorRespuestas administradorRespuestas = new AdministradorRespuestas();
+        administradorRespuestas.start();
+        VentanaConfiguracion configuracion = new VentanaConfiguracion();        
     }
 }

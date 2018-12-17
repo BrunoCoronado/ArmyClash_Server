@@ -15,10 +15,12 @@ public class Matriz {
     
     public void agregarFila(int numFila){
         if(primeroFila != null){
-            NodoFila tmp = primeroFila;
-            primeroFila = new NodoFila(numFila);
-            primeroFila.abajo = tmp;
-            ordenarFilas();
+            if(existeFila(numFila)){
+                NodoFila tmp = primeroFila;
+                primeroFila = new NodoFila(numFila);
+                primeroFila.abajo = tmp;
+                ordenarFilas();
+            }
         }else{//insertarmos en la primera posicion
             primeroFila = new NodoFila(numFila);
         }
@@ -26,108 +28,73 @@ public class Matriz {
     
     public void agregarColumna(int numColumna){
         if(primeroColumna != null){//insertarmos en la primera posicion
-            NodoColumna tmp = primeroColumna;
-            primeroColumna = new NodoColumna(numColumna);
-            primeroColumna.siguiente = tmp;
-            ordenarColumnas();
+            if(existeColumna(numColumna)){
+                NodoColumna tmp = primeroColumna;
+                primeroColumna = new NodoColumna(numColumna);
+                primeroColumna.siguiente = tmp;
+                ordenarColumnas();
+            }
         }else{
             primeroColumna = new NodoColumna(numColumna);
         }
     }
     
-//    public void insertarCelda(Object valor, int numColumna, int numFila){
-//        NodoColumna tmpColumna = primeroColumna;
-//        NodoFila tmpFila = primeroFila;
-//        NodoCelda nuevo = new NodoCelda(valor, numColumna,numFila);
-//        
-//        while(tmpColumna != null){
-//            if(tmpColumna.numColumna == numColumna){
-//                NodoCelda tmpCelda = tmpColumna.abajo;
-//                if(tmpCelda == null)
-//                    tmpColumna.abajo = nuevo;
-//                else{
-//                    while(tmpCelda.abajo != null)
-//                        tmpCelda = tmpCelda.abajo;
-//                    nuevo.arriba = tmpCelda;
-//                    tmpCelda.abajo = nuevo;
-//                }
-//                break;
-//            }
-//            tmpColumna = tmpColumna.siguiente;
-//        }
-//        
-//        while (tmpFila != null){
-//            if(tmpFila.numFila == numFila){
-//                NodoCelda tmpCelda = tmpFila.derecha;
-//                if(tmpCelda == null)
-//                    tmpFila.derecha = nuevo;
-//                else{
-//                    while(tmpCelda.derecha != null)
-//                        tmpCelda = tmpCelda.derecha;
-//                    nuevo.izquierda = tmpCelda;
-//                    tmpCelda.derecha = nuevo;
-//                }
-//                break;
-//            }
-//            tmpFila = tmpFila.abajo;
-//        }
-//    }
-    
     public void insertarCelda(Object valor, int numColumna, int numFila){//esta insercion lo pone en el lugar que deberia("ordenado")
         NodoColumna tmpColumna = primeroColumna;
         NodoFila tmpFila = primeroFila;
         NodoCelda nuevo = new NodoCelda(valor, numColumna,numFila);
-        
-        while(tmpColumna != null){//recorremos las cabeceras de las columnas
-            if(tmpColumna.numColumna == numColumna){//si es la columna que buscamos
-                NodoCelda tmpCelda = tmpColumna.abajo;//empezamos a recorrer los nodos que estan por debajo, buscando la fila
-                if(tmpCelda != null){//si la columna tiene celdas
-                    NodoCelda tmpCeldaAbajo = tmpCelda.abajo;//hacemos un temporal del que esta abajo
-                    while(tmpCeldaAbajo != null){//mientras que exista alguno abajo
-                        if(tmpCeldaAbajo.numFila > numFila){//hacemos que el temporal de abajo uno despues de donde queremos insertar
-                            break;
+        if(!existeCelda(valor, numColumna, numFila)){
+            while(tmpColumna != null){//recorremos las cabeceras de las columnas
+                if(tmpColumna.numColumna == numColumna){//si es la columna que buscamos
+                    NodoCelda tmpCelda = tmpColumna.abajo;//empezamos a recorrer los nodos que estan por debajo, buscando la fila
+                    if(tmpCelda != null){//si la columna tiene celdas
+                        NodoCelda tmpCeldaAbajo = tmpCelda.abajo;//hacemos un temporal del que esta abajo
+                        while(tmpCeldaAbajo != null){//mientras que exista alguno abajo
+                            if(tmpCeldaAbajo.numFila > numFila){//hacemos que el temporal de abajo uno despues de donde queremos insertar
+                                break;
+                            }
+                            tmpCelda = tmpCelda.abajo;
+                            tmpCeldaAbajo = tmpCelda.abajo;
+                        }//una vez posicionado donde deberia insertar, se inserta entre los nodos
+                        nuevo.arriba = tmpCelda;
+                        tmpCelda.abajo = nuevo;
+                        if(tmpCeldaAbajo != null){
+                            nuevo.abajo = tmpCeldaAbajo;
+                            tmpCeldaAbajo.arriba = nuevo;
                         }
-                        tmpCelda = tmpCelda.abajo;
-                        tmpCeldaAbajo = tmpCelda.abajo;
-                    }//una vez posicionado donde deberia insertar, se inserta entre los nodos
-                    nuevo.arriba = tmpCelda;
-                    tmpCelda.abajo = nuevo;
-                    if(tmpCeldaAbajo != null){
-                        nuevo.abajo = tmpCeldaAbajo;
-                        tmpCeldaAbajo.arriba = nuevo;
+                    }else{
+                        tmpColumna.abajo = nuevo;
                     }
-                }else{
-                    tmpColumna.abajo = nuevo;
+                    break;
                 }
-                break;
+                tmpColumna = tmpColumna.siguiente;
             }
-            tmpColumna = tmpColumna.siguiente;
-        }
-        //repetimos el codigo anterior, pero ahora para las filas
-        while(tmpFila != null){
-            if(tmpFila.numFila == numFila){
-                NodoCelda tmpCelda = tmpFila.derecha;
-                if(tmpCelda != null){
-                    NodoCelda tmpCeldaDerecha = tmpCelda.derecha;
-                    while(tmpCeldaDerecha != null){
-                        if(tmpCeldaDerecha.numColumna > numColumna){
-                            break;
+            //repetimos el codigo anterior, pero ahora para las filas
+            while(tmpFila != null){
+                if(tmpFila.numFila == numFila){
+                    NodoCelda tmpCelda = tmpFila.derecha;
+                    if(tmpCelda != null){
+                        NodoCelda tmpCeldaDerecha = tmpCelda.derecha;
+                        while(tmpCeldaDerecha != null){
+                            if(tmpCeldaDerecha.numColumna > numColumna){
+                                break;
+                            }
+                            tmpCelda = tmpCelda.derecha;
+                            tmpCeldaDerecha = tmpCelda.derecha;
                         }
-                        tmpCelda = tmpCelda.derecha;
-                        tmpCeldaDerecha = tmpCelda.derecha;
+                        nuevo.izquierda = tmpCelda;
+                        tmpCelda.derecha = nuevo;
+                        if(tmpCeldaDerecha != null){
+                            nuevo.derecha = tmpCeldaDerecha;
+                            tmpCeldaDerecha.izquierda = nuevo;
+                        }
+                    }else{
+                        tmpFila.derecha = nuevo;
                     }
-                    nuevo.izquierda = tmpCelda;
-                    tmpCelda.derecha = nuevo;
-                    if(tmpCeldaDerecha != null){
-                        nuevo.derecha = tmpCeldaDerecha;
-                        tmpCeldaDerecha.izquierda = nuevo;
-                    }
-                }else{
-                    tmpFila.derecha = nuevo;
+                    break;
                 }
-                break;
+                tmpFila = tmpFila.abajo;
             }
-            tmpFila = tmpFila.abajo;
         }
     }
     
@@ -195,6 +162,24 @@ public class Matriz {
                 return true;
             }
             tmp = tmp.siguiente;
+        }
+        return false;
+    }
+    
+    public boolean existeCelda(Object valor, int numColumna, int numFila){
+        NodoColumna tmpColumna = primeroColumna;
+        while(tmpColumna != null){
+            if(tmpColumna.numColumna == numColumna){
+                NodoCelda tmpCelda = tmpColumna.abajo;
+                while(tmpCelda != null){
+                    if(tmpCelda.numFila == numFila){
+                        return true;
+                    }
+                    tmpCelda = tmpCelda.abajo;
+                }
+                break;
+            }
+            tmpColumna = tmpColumna.siguiente;
         }
         return false;
     }

@@ -13,19 +13,17 @@ import com.rabbitmq.client.ConnectionFactory;
  *
  * @author bruno
  */
-public class Enviar{
-    //SERVIDOR
-    private final static String COLA = "pruebaHilo"; 
+public class Emisor {
     
-    public void enviarACola(String msg) throws Exception{
+    public void enviarPeticion(String respuesta){
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
-        try (Connection connection = factory.newConnection(); 
-                Channel channel = connection.createChannel();){
-            
-            channel.queueDeclare(COLA, false, false, false, null);
-            channel.basicPublish("", COLA, null, msg.getBytes());
-            System.out.println("enviando: " +msg);
+        try {
+            Connection connection = factory.newConnection();
+            Channel channel = connection.createChannel();
+            channel.queueDeclare("ArmyClash-Respuestas", false, false, false, null);
+            channel.basicPublish("", "ArmyClash-Respuestas", null, respuesta.getBytes());
+            System.out.println("respuesta: " + respuesta);
         }catch(Exception ex){
             ex.printStackTrace();
         }

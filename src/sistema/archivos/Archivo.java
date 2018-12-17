@@ -43,8 +43,6 @@ public class Archivo {
                 log += "!!!ERROR - CONTENIDO INVALIDO!!!";
             }
             log += "***CAPA CARGADA***\n";
-            capa.mostrarFilas();
-            capa.mostrarMatriz();
         }catch(Exception ex){
             ex.printStackTrace();
             log += "!!!ERROR DURANTE CARGA!!!\n";
