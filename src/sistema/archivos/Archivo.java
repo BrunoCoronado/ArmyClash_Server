@@ -55,12 +55,8 @@ public class Archivo {
             int fila = Integer.parseInt(contenido.substring((contenido.indexOf(",") + 1), contenido.indexOf(";")));//obtenemos la fila empezando por uno despues de la primera coma(debido a que es inclusivo el primer indice)
             String tipo = contenido.substring((contenido.indexOf(";") + 1));//obtenemos el tipo empezando por uno despues del primer ; (debido a que es inclusivo el primer indice)
             log += "Columna: "+columna+" Fila: "+fila+" Tipo: "+tipo+"\n";
-            if(!capa.existeColumna(columna)){
-                capa.agregarColumna(columna);
-            }
-            if(!capa.existeFila(fila)){
-                capa.agregarFila(fila);
-            }
+            capa.agregarColumna(columna);//este metodo incluye verificacion de existencia
+            capa.agregarFila(fila);//este metodo incluye verificacion de existencia
             capa.insertarCelda(tipo, columna, fila);
         }catch(Exception ex){
             ex.printStackTrace();
@@ -106,6 +102,25 @@ public class Archivo {
         }
     }
     
+    public void cargarTropas(String contenido){
+        try{
+            arbol = new Arbol();
+            String[] cuerpo = contenido.split(">");
+            int jugador = Integer.parseInt(cuerpo[1]);
+            String[] informacion = cuerpo[0].split("\n");
+            for(int i = 0; i < informacion.length ; i++){
+                llenarArbol(informacion[i]);
+            }
+            arbol.inorden();
+            if(jugador == 1)
+                main.Main.arbolJugador1 = arbol;
+            else
+                main.Main.arbolJugador2 = arbol;
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+    
     private void llenarArbol(String contenido){
         try{
             String parteA = contenido.substring(0, contenido.indexOf(";"));
@@ -114,11 +129,9 @@ public class Archivo {
             int columna = Integer.parseInt(partesA[0]);
             int fila = Integer.parseInt(partesA[1]);
             int id = Integer.parseInt(partesA[2]);
-            log += "Columna: "+columna+" Fila: "+fila+" ID: "+id+" Tipo: "+tipo+"\n";
             arbol.insertar(new Tropa(id, tipo, columna, fila));
         }catch(Exception ex){
             ex.printStackTrace();
-            log += "!!!ERROR AGREGANDO NODO!!!\n";
         }
     }
 }

@@ -23,7 +23,6 @@ public class Emisor {
             Channel channel = connection.createChannel();
             channel.queueDeclare("ArmyClash-Respuestas", false, false, false, null);
             channel.basicPublish("", "ArmyClash-Respuestas", null, respuesta.getBytes());
-            System.out.println("respuesta: " + respuesta);
         }catch(Exception ex){
             ex.printStackTrace();
         }

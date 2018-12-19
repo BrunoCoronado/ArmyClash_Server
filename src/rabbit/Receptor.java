@@ -9,6 +9,7 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
+import sistema.archivos.Archivo;
 
 /**
  *
@@ -25,10 +26,29 @@ public class Receptor extends Thread{
             Channel canal = conexion.createChannel();
             canal.queueDeclare("ArmyClash-Peticiones", false, false, false, null);
             DeliverCallback deliverCallback = (consumerTag, delivery) ->{
-                main.Main.peticiones.insertar(new String(delivery.getBody(), "UTF-8")); 
-                main.Main.peticiones.mostrar();
+                String mensaje = new String(delivery.getBody(), "UTF-8");
+                manejarMensajes(mensaje);
             };
             canal.basicConsume("", true, deliverCallback, consumerTag -> {});
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+    
+    public void manejarMensajes(String mensaje){
+        try{
+            if(mensaje.contains("<")){
+                String[] contenido = mensaje.split("<");//la posicion 0 contendria el cuerpo del mensaje y la parte la accion a tomar   
+                switch(contenido[1]){
+                    case "0":
+                        Archivo archivo = new Archivo();
+                        archivo.cargarTropas(contenido[0]);
+                        break;
+                }
+            }else{
+                main.Main.peticiones.insertar(mensaje); 
+                main.Main.peticiones.mostrar();
+            }
         }catch(Exception ex){
             ex.printStackTrace();
         }

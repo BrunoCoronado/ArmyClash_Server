@@ -5,6 +5,8 @@
  */
 package estructuras.listaDobleCircular;
 
+import estructuras.matrizDispersa.Matriz;
+
 /**
  *
  * @author bruno
@@ -134,5 +136,41 @@ public class ListaDobleCircular {
                 tmp = tmp.siguiente;
             }while(tmp != primero);
         }
+    }
+    
+    public int filasMapa;
+    public int columnasMapa;
+    
+    public String generarMapa(){
+        Matriz mapa = new Matriz();
+        if(primero != null){
+            NodoLC tmp = primero;
+            do{
+                Matriz matriz = (Matriz)tmp.valor;
+                String contenidoCapa = matriz.obtenerContenido();
+                String[] valores = contenidoCapa.split("\n");
+                for(int i = 0; i < valores.length ; i++)
+                    mapa = llenarMapaCapa(valores[i], mapa);
+                mapa.mostrarMatriz();
+                tmp = tmp.siguiente;
+            }while(tmp != primero);
+        }
+        filasMapa = mapa.numMaxFila;
+        columnasMapa = mapa.numMaxColumna;
+        return mapa.obtenerContenido();
+    }
+    
+    private Matriz llenarMapaCapa(String contenido, Matriz mapa){
+            String[] informacion = contenido.split(",");
+            int columna = Integer.parseInt(informacion[1]);
+            int fila = Integer.parseInt(informacion[2]);
+            String valor = informacion[0];
+            if(!mapa.existeCelda(valor, columna, fila)){
+                mapa.agregarColumna(columna);
+                mapa.agregarFila(fila);
+                mapa.insertarCelda(valor, columna, fila);
+            }else
+                mapa.sobrescribirCelda(valor, columna, fila);
+            return mapa;
     }
 }

@@ -30,10 +30,20 @@ public class AdministradorRespuestas extends Thread{
     
     private String  manejarPeticion(String peticion){
         switch(peticion){
-            case "mapa": return "MAPA";
+            case "mapa": return enviarInformacionMapa() + ">m<0";
             case "jugador1": return "JUGADOR1";
             case "jugador2": return "JUGADOR2";
         }
         return "";
     }
+    
+    private String enviarInformacionMapa(){
+        String contenido = main.Main.capas.generarMapa();
+        int filas = main.Main.capas.filasMapa;
+        int columnas = main.Main.capas.columnasMapa;
+        if(filas != 0 && columnas != 0){
+            contenido = filas+"#"+columnas+"#"+contenido;
+        }
+        return contenido;
+    }    
 }
