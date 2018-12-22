@@ -142,8 +142,8 @@ public class ListaDobleCircular {
     public int columnasMapa;
     
     public String generarMapa(){
-        Matriz mapa = new Matriz();
         if(primero != null){
+            Matriz mapa = new Matriz();
             NodoLC tmp = primero;
             do{
                 Matriz matriz = (Matriz)tmp.valor;
@@ -151,13 +151,13 @@ public class ListaDobleCircular {
                 String[] valores = contenidoCapa.split("\n");
                 for(int i = 0; i < valores.length ; i++)
                     mapa = llenarMapaCapa(valores[i], mapa);
-                mapa.mostrarMatriz();
                 tmp = tmp.siguiente;
             }while(tmp != primero);
+            filasMapa = mapa.numeroFilasMaximo();
+            columnasMapa = mapa.numeroColumnasMaximo();
+            return mapa.obtenerContenido();
         }
-        filasMapa = mapa.numMaxFila;
-        columnasMapa = mapa.numMaxColumna;
-        return mapa.obtenerContenido();
+        return null;
     }
     
     private Matriz llenarMapaCapa(String contenido, Matriz mapa){

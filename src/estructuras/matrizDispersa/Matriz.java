@@ -12,8 +12,6 @@ package estructuras.matrizDispersa;
 public class Matriz {
     NodoFila primeroFila;
     NodoColumna primeroColumna;
-    public int numMaxColumna = 0;
-    public int numMaxFila = 0;
     
     public void agregarFila(int numFila){
         if(primeroFila != null){
@@ -21,9 +19,6 @@ public class Matriz {
                 NodoFila tmp = primeroFila;
                 primeroFila = new NodoFila(numFila);
                 primeroFila.abajo = tmp;
-                if(numMaxFila < numFila){
-                    numMaxFila = numFila;
-                }
                 ordenarFilas();
             }
         }else{//insertarmos en la primera posicion
@@ -37,9 +32,6 @@ public class Matriz {
                 NodoColumna tmp = primeroColumna;
                 primeroColumna = new NodoColumna(numColumna);
                 primeroColumna.siguiente = tmp;
-                if(numMaxColumna < numColumna){
-                    numMaxColumna = numColumna;
-                }
                 ordenarColumnas();
             }
         }else{
@@ -264,11 +256,33 @@ public class Matriz {
         while(tmpFila != null){
             NodoCelda tmpCelda = tmpFila.derecha;
             while(tmpCelda != null){
-                contenido += tmpCelda.valor+","+tmpCelda.numFila+","+tmpCelda.numColumna+"\n";
+                contenido += tmpCelda.valor+","+tmpCelda.numColumna+","+tmpCelda.numFila+"\n";
                 tmpCelda = tmpCelda.derecha;
             }
             tmpFila = tmpFila.abajo;
         }
         return contenido;
+    }
+    
+    public int numeroFilasMaximo(){
+        NodoFila tmp = primeroFila;
+        while(tmp != null){
+            if(tmp.abajo == null){
+                break;
+            }
+            tmp = tmp.abajo;
+        }
+        return tmp.numFila;
+    }
+    
+    public int numeroColumnasMaximo(){
+        NodoColumna tmp = primeroColumna;
+        while(tmp != null){
+            if(tmp.siguiente == null){
+                break;
+            }
+            tmp = tmp.siguiente;
+        }
+        return tmp.numColumna;
     }
 }

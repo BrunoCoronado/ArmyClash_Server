@@ -12,10 +12,10 @@ import sistema.bean.Tropa;
  * @author bruno
  */
 public class NodoA {
-    Tropa tropa;
-    NodoA izq;
-    NodoA der;
-    NodoA padre;
+    public Tropa tropa;
+    public NodoA izq;
+    public NodoA der;
+    public NodoA padre;
 
     public NodoA(Tropa tropa) {
         this.tropa = tropa;

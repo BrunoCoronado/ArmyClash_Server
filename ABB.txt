@@ -1,0 +1,13 @@
+digraph G {
+nodo4[label = "ID: 4 \nTipo: infanteria  \nPosX: 1 \nPosY: 14\nVida: 50\nAtaque: 30\nMoviento: 2\nA. Ataque:1"]
+nodo1[label = "ID: 1 \nTipo: tanque  \nPosX: 1 \nPosY: 15\nVida: 150\nAtaque: 80\nMoviento: 4\nA. Ataque:2"]
+nodo3[label = "ID: 3 \nTipo: mtanque  \nPosX: 4 \nPosY: 15\nVida: 200\nAtaque: 100\nMoviento: 3\nA. Ataque:2"]
+nodo5[label = "ID: 5 \nTipo: infanteria  \nPosX: 2 \nPosY: 14\nVida: 50\nAtaque: 30\nMoviento: 2\nA. Ataque:1"]
+nodo6[label = "ID: 6 \nTipo: tanque  \nPosX: 2 \nPosY: 15\nVida: 150\nAtaque: 80\nMoviento: 4\nA. Ataque:2"]
+nodo10[label = "ID: 10 \nTipo: artilleria  \nPosX: 3 \nPosY: 15\nVida: 50\nAtaque: 150\nMoviento: 3\nA. Ataque:6"]
+"nodo4"->"nodo1"
+"nodo1"->"nodo3"
+"nodo4"->"nodo5"
+"nodo5"->"nodo6"
+"nodo6"->"nodo10"
+}

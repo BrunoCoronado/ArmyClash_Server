@@ -37,20 +37,29 @@ public class Receptor extends Thread{
     
     public void manejarMensajes(String mensaje){
         try{
-            if(mensaje.contains("<")){
-                String[] contenido = mensaje.split("<");//la posicion 0 contendria el cuerpo del mensaje y la parte la accion a tomar   
-                switch(contenido[1]){
-                    case "0":
-                        Archivo archivo = new Archivo();
-                        archivo.cargarTropas(contenido[0]);
-                        break;
-                }
-            }else{
-                main.Main.peticiones.insertar(mensaje); 
-                main.Main.peticiones.mostrar();
+            String[] contenido = mensaje.split("<");   
+            switch(contenido[1]){
+                case "0"://no solicita respuesta
+                    Archivo archivo = new Archivo();
+                    archivo.cargarTropas(contenido[0]);
+                    break;
+                case "1"://solicita respuesta
+                    switch(contenido[0]){
+                        case "mapa":
+                            sistema.ui.VentanaConfiguracion.txtLog.setText(sistema.ui.VentanaConfiguracion.txtLog.getText()+ "Peticion: MAPA De: Cliente\n----> Agregando a Cola...\n");
+                            main.Main.peticiones.insertar("mapa"); 
+                            break;
+                        case "tropas":
+                            sistema.ui.VentanaConfiguracion.txtLog.setText(sistema.ui.VentanaConfiguracion.txtLog.getText()+ "Peticion: TROPAS De: Cliente\n----> Agregando a Cola...\n");
+                            main.Main.peticiones.insertar("tropas"); 
+                            break;
+                        default:
+                            sistema.ui.VentanaConfiguracion.txtLog.setText(sistema.ui.VentanaConfiguracion.txtLog.getText()+ "Peticion:DESCONOCIDA De: Cliente\n----> Imposible responder...\n");
+                    }
+                    break;
             }
         }catch(Exception ex){
-            ex.printStackTrace();
+            
         }
     }
 }

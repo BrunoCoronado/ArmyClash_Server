@@ -25,25 +25,40 @@ public class AdministradorRespuestas extends Thread{
            }
        });
        timer.start();
-        System.out.println("Administrador de respuestas activo");
+        sistema.ui.VentanaConfiguracion.txtLog.setText(sistema.ui.VentanaConfiguracion.txtLog.getText() + "Administrador de respuestas activo\n");
     }
     
     private String  manejarPeticion(String peticion){
         switch(peticion){
-            case "mapa": return enviarInformacionMapa() + ">m<0";
-            case "jugador1": return "JUGADOR1";
-            case "jugador2": return "JUGADOR2";
+            case "mapa": return enviarInformacionMapa();
+            case "tropas": return enviarInformacionTropas();
         }
         return "";
     }
     
     private String enviarInformacionMapa(){
         String contenido = main.Main.capas.generarMapa();
-        int filas = main.Main.capas.filasMapa;
-        int columnas = main.Main.capas.columnasMapa;
-        if(filas != 0 && columnas != 0){
-            contenido = filas+"#"+columnas+"#"+contenido;
+        if(contenido != null){
+            int filas = main.Main.capas.filasMapa;
+            int columnas = main.Main.capas.columnasMapa;
+            if(filas != 0 && columnas != 0){
+                contenido = filas+"#"+columnas+"#"+contenido;
+            }
+            sistema.ui.VentanaConfiguracion.txtLog.setText(sistema.ui.VentanaConfiguracion.txtLog.getText() + "---->Enviando mapa a cliente<----\n");
+            return contenido + ">m<0";
         }
-        return contenido;
+        sistema.ui.VentanaConfiguracion.txtLog.setText(sistema.ui.VentanaConfiguracion.txtLog.getText() + "---->!Respuesta a peticion del cliente sin contenido!<----\n");
+        return "";
     }    
+    
+    private String enviarInformacionTropas(){
+        if(main.Main.arbolJugador1 != null && main.Main.arbolJugador2 != null){
+            sistema.ui.VentanaConfiguracion.txtLog.setText(sistema.ui.VentanaConfiguracion.txtLog.getText() + "---->Enviando tropas a cliente<----\n");
+            String jugador1 = main.Main.arbolJugador1.obtenerContenidoArbol();
+            String jugador2 = main.Main.arbolJugador2.obtenerContenidoArbol();
+            return jugador1 + "#" + jugador2+">t<0";
+        }
+        sistema.ui.VentanaConfiguracion.txtLog.setText(sistema.ui.VentanaConfiguracion.txtLog.getText() + "---->!Respuesta a peticion del cliente sin contenido!<----\n");
+        return "";
+    }
 }

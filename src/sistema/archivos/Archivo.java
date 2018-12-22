@@ -18,7 +18,6 @@ import sistema.bean.Tropa;
 public class Archivo {
     private Matriz capa;
     private Arbol arbol;
-    private boolean error = false;
     public String log = "";
     
     public void cargarCapa(String path, int numCapa){
@@ -31,7 +30,7 @@ public class Archivo {
                 if(contenido.contains(obtenerTipoContenido(numCapa))){
                     llenarMapa(contenido);
                 }else{
-                    error = true;
+                    throw new Exception("***CONTENIDO INVALIDO***\n");
                 }
                 contenido = reader.readLine();
             }
@@ -39,13 +38,10 @@ public class Archivo {
                main.Main.capas.sobrescribir(capa, numCapa);
            else
                 main.Main.capas.insertar(capa, numCapa);
-            if(error){
-                log += "!!!ERROR - CONTENIDO INVALIDO!!!";
-            }
             log += "***CAPA CARGADA***\n";
         }catch(Exception ex){
-            ex.printStackTrace();
             log += "!!!ERROR DURANTE CARGA!!!\n";
+            log += ex.getMessage();
         }
     }
     
@@ -54,7 +50,6 @@ public class Archivo {
             int columna = Integer.parseInt(contenido.substring(0, contenido.indexOf(",")));//obtenemos la columna -> obteniendo el substring antes de la coma que separa columnas-
             int fila = Integer.parseInt(contenido.substring((contenido.indexOf(",") + 1), contenido.indexOf(";")));//obtenemos la fila empezando por uno despues de la primera coma(debido a que es inclusivo el primer indice)
             String tipo = contenido.substring((contenido.indexOf(";") + 1));//obtenemos el tipo empezando por uno despues del primer ; (debido a que es inclusivo el primer indice)
-            log += "Columna: "+columna+" Fila: "+fila+" Tipo: "+tipo+"\n";
             capa.agregarColumna(columna);//este metodo incluye verificacion de existencia
             capa.agregarFila(fila);//este metodo incluye verificacion de existencia
             capa.insertarCelda(tipo, columna, fila);
@@ -106,12 +101,12 @@ public class Archivo {
         try{
             arbol = new Arbol();
             String[] cuerpo = contenido.split(">");
-            int jugador = Integer.parseInt(cuerpo[1]);
+            int jugador = Integer.parseInt(cuerpo[1].substring(1));
             String[] informacion = cuerpo[0].split("\n");
             for(int i = 0; i < informacion.length ; i++){
                 llenarArbol(informacion[i]);
             }
-            arbol.inorden();
+            sistema.ui.VentanaConfiguracion.txtLog.setText(sistema.ui.VentanaConfiguracion.txtLog.getText()+ "Cargando: Tropas Jugador "+jugador+" De: Cliente\n");
             if(jugador == 1)
                 main.Main.arbolJugador1 = arbol;
             else

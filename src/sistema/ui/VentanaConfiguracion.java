@@ -7,6 +7,7 @@ package sistema.ui;
 
 import javax.swing.filechooser.FileNameExtensionFilter;
 import sistema.archivos.Archivo;
+import sistema.graficos.ArbolBinario;
 
 /**
  *
@@ -48,16 +49,16 @@ public class VentanaConfiguracion extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtLog = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnCargarArchivo = new javax.swing.JButton();
         CboxCargaArchivos = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnGraficarArbolJ1 = new javax.swing.JButton();
+        btnGraficarArbolJ2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
-        jButton4 = new javax.swing.JButton();
+        btnReporteCapas = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         fileChooser.getAccessibleContext().setAccessibleName("");
 
@@ -72,8 +73,8 @@ public class VentanaConfiguracion extends javax.swing.JFrame {
 
         jLabel1.setText("Log:");
 
-        jButton1.setText("Cargar Archivo");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCargarArchivo.setText("Cargar Archivo");
+        btnCargarArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCargarArchivo(evt);
             }
@@ -89,9 +90,20 @@ public class VentanaConfiguracion extends javax.swing.JFrame {
 
         jLabel3.setText("Reportes");
 
-        jButton2.setText("jButton2");
+        btnGraficarArbolJ1.setText("Arbol J1");
+        btnGraficarArbolJ1.setActionCommand("");
+        btnGraficarArbolJ1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGraficarArbolJ1ActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("jButton3");
+        btnGraficarArbolJ2.setText("Arbol J2");
+        btnGraficarArbolJ2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGraficarArbolJ2ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Tropas");
 
@@ -99,7 +111,12 @@ public class VentanaConfiguracion extends javax.swing.JFrame {
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton4.setText("jButton4");
+        btnReporteCapas.setText("Ver Reporte");
+        btnReporteCapas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteCapasActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("ArmyClash - Servidor");
 
@@ -110,50 +127,48 @@ public class VentanaConfiguracion extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnGraficarArbolJ2)
+                            .addComponent(btnGraficarArbolJ1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnReporteCapas)
+                                .addGap(35, 35, 35))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(65, 65, 65)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButton3)
-                                    .addComponent(jButton2))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jButton4)
-                                        .addGap(35, 35, 35))))
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(CboxCargaArchivos, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnCargarArchivo))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(CboxCargaArchivos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton1))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel6)
-                                            .addComponent(jLabel3))
-                                        .addGap(0, 0, Short.MAX_VALUE)))))
-                        .addGap(18, 18, 18))
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel3))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(84, 84, 84)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel5)
-                        .addGap(74, 74, 74)))
+                        .addGap(44, 44, 44)))
+                .addGap(75, 75, 75)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel6))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -163,7 +178,7 @@ public class VentanaConfiguracion extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
+                            .addComponent(btnCargarArchivo)
                             .addComponent(CboxCargaArchivos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
                         .addGap(44, 44, 44)
@@ -174,12 +189,12 @@ public class VentanaConfiguracion extends javax.swing.JFrame {
                             .addComponent(jLabel5))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2)
+                            .addComponent(btnGraficarArbolJ1)
                             .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton3)
-                            .addComponent(jButton4))
+                            .addComponent(btnGraficarArbolJ2)
+                            .addComponent(btnReporteCapas))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -201,15 +216,45 @@ public class VentanaConfiguracion extends javax.swing.JFrame {
     private void CboxCargaArchivosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CboxCargaArchivosItemStateChanged
         fileChooser.resetChoosableFileFilters();
         FileNameExtensionFilter filtro;
+        btnCargarArchivo.setEnabled(true);
         if(CboxCargaArchivos.getSelectedIndex() < 5)
             filtro = new FileNameExtensionFilter(".map", "map");
-        else
+        else{
             filtro = new FileNameExtensionFilter(".army", "army");
+            //btnCargarArchivo.setEnabled(false);
+        }
         fileChooser.setFileFilter(filtro);
     }//GEN-LAST:event_CboxCargaArchivosItemStateChanged
 
-    
-    
+    private void btnGraficarArbolJ1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraficarArbolJ1ActionPerformed
+        if(main.Main.arbolJugador1 != null){
+            txtLog.setText(txtLog.getText() + "Graficando Arbol Jugador 1...\n");
+            ArbolBinario graficador =  new ArbolBinario();
+            graficador.graficarArbol(main.Main.arbolJugador1);
+        }else{
+            txtLog.setText(txtLog.getText() + "*!Imposible Graficar -> Arbol Vacio!*\n");
+        }
+    }//GEN-LAST:event_btnGraficarArbolJ1ActionPerformed
+
+    private void btnGraficarArbolJ2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraficarArbolJ2ActionPerformed
+        if(main.Main.arbolJugador2 != null){
+            txtLog.setText(txtLog.getText() + "Graficando Arbol Jugador 2...\n");
+            ArbolBinario graficador =  new ArbolBinario();
+            graficador.graficarArbol(main.Main.arbolJugador2);
+        }else{
+            txtLog.setText(txtLog.getText() + "*!Imposible Graficar -> Arbol Vacio!*\n");
+        }
+    }//GEN-LAST:event_btnGraficarArbolJ2ActionPerformed
+
+    private void btnReporteCapasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteCapasActionPerformed
+        try{
+            //System.out.println(main.Main.arbolJugador1.obtenerContenidoArbol());
+            //System.out.println(main.Main.arbolJugador2.obtenerContenidoArbol());
+        }catch(Exception ex){
+           
+        }
+    }//GEN-LAST:event_btnReporteCapasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -247,11 +292,11 @@ public class VentanaConfiguracion extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CboxCargaArchivos;
+    private javax.swing.JButton btnCargarArchivo;
+    private javax.swing.JButton btnGraficarArbolJ1;
+    private javax.swing.JButton btnGraficarArbolJ2;
+    private javax.swing.JButton btnReporteCapas;
     private javax.swing.JFileChooser fileChooser;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -260,6 +305,6 @@ public class VentanaConfiguracion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea txtLog;
+    public static javax.swing.JTextArea txtLog;
     // End of variables declaration//GEN-END:variables
 }

@@ -12,7 +12,7 @@ import sistema.bean.Tropa;
  * @author bruno
  */
 public class Arbol {
-    NodoA raiz = null;
+    public NodoA raiz = null;
     
     public void insertar(Tropa tropa){
         if(raiz != null)
@@ -199,5 +199,18 @@ public class Arbol {
                 return false;
         }
         return false;
+    }
+    
+    public String obtenerContenidoArbol(){
+        return contenidoArbol(raiz, "");
+    }
+    
+    private String contenidoArbol(NodoA tmp, String contenido){
+        if(tmp != null){
+            contenido += tmp.tropa.getId()+","+tmp.tropa.getNombre()+","+tmp.tropa.getPosicionX()+","+tmp.tropa.getPosicionY()+"\n";
+            contenido = contenidoArbol(tmp.izq, contenido);
+            contenido = contenidoArbol(tmp.der, contenido);
+        }
+        return contenido;
     }
 }
