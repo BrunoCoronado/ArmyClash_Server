@@ -97,12 +97,10 @@ public class Archivo {
         }
     }
     
-    public void cargarTropas(String contenido){
+    public void cargarTropasCliente(String contenido, int jugador){
         try{
             arbol = new Arbol();
-            String[] cuerpo = contenido.split(">");
-            int jugador = Integer.parseInt(cuerpo[1].substring(1));
-            String[] informacion = cuerpo[0].split("\n");
+            String[] informacion = contenido.split("\n");
             for(int i = 0; i < informacion.length ; i++){
                 llenarArbol(informacion[i]);
             }

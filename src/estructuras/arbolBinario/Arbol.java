@@ -133,6 +133,47 @@ public class Arbol {
         return tmp;
     }
     
+    public void modificarNodo(int id, int posX, int posY, int vida){
+        if(raiz != null){
+            if(raiz.tropa.getId() != id)
+                modificarNodo(id, posX, posY, vida, raiz);
+            else{
+                raiz.tropa.setPosicionX(posX);
+                raiz.tropa.setPosicionY(posY);
+                raiz.tropa.setVida(vida);
+                sistema.ui.VentanaConfiguracion.txtLog.append("---> Moviemiento del Cliente Guardado\n");
+            }
+        }
+    }
+    
+    private void modificarNodo(int id, int posX, int posY, int vida, NodoA tmp){
+        if(id < tmp.tropa.getId()){
+            if(tmp.izq != null){
+                if(tmp.izq.tropa.getId() != id){
+                    modificarNodo(id, posX, posY, vida, tmp.izq);
+                }else{
+                    tmp.izq.tropa.setPosicionX(posX);
+                    tmp.izq.tropa.setPosicionY(posY);
+                    tmp.izq.tropa.setVida(vida);
+                    sistema.ui.VentanaConfiguracion.txtLog.append("---> Moviemiento del Cliente Guardado\n");
+                }
+            }else
+                sistema.ui.VentanaConfiguracion.txtLog.append("!!!Imposible Modificar Tropa - No Encontrada!!!!\n");
+        }else if(id > tmp.tropa.getId()){
+            if(tmp.der != null){
+                if(tmp.der.tropa.getId() != id){
+                    modificarNodo(id, posX, posY, vida, tmp.der);
+                }else{
+                    tmp.der.tropa.setPosicionX(posX);
+                    tmp.der.tropa.setPosicionY(posY);
+                    tmp.der.tropa.setVida(vida);
+                    sistema.ui.VentanaConfiguracion.txtLog.append("---> Moviemiento del Cliente Guardado\n");
+                }                    
+            }else
+                sistema.ui.VentanaConfiguracion.txtLog.append("!!!Imposible Modificar Tropa - No Encontrada!!!!\n");
+        }
+    }
+    
     public void preorden(){
         preorden(raiz);
         System.out.println();

@@ -16,7 +16,6 @@ import sistema.ui.VentanaConfiguracion;
  *
  * @author bruno
  */
-//CLIENTE
 public class Main {
 
     /**

@@ -40,8 +40,28 @@ public class Receptor extends Thread{
             String[] contenido = mensaje.split("<");   
             switch(contenido[1]){
                 case "0"://no solicita respuesta
-                    Archivo archivo = new Archivo();
-                    archivo.cargarTropas(contenido[0]);
+                    String[] cuerpoMensaje = contenido[0].split(">");
+                    Archivo archivo;
+                    switch(cuerpoMensaje[1]){
+                        case "t1":
+                            archivo = new Archivo();
+                            archivo.cargarTropasCliente(cuerpoMensaje[0], Integer.parseInt(cuerpoMensaje[1].substring(1)));   
+                            break;
+                        case "t2":
+                            archivo = new Archivo();
+                            archivo.cargarTropasCliente(cuerpoMensaje[0], Integer.parseInt(cuerpoMensaje[1].substring(1)));   
+                            break;
+                        case "ac1":
+                            sistema.ui.VentanaConfiguracion.txtLog.append("---> Guardando movimiento jugador 1\n");
+                            String[] valoresJ1 = cuerpoMensaje[0].split(",");
+                            main.Main.arbolJugador1.modificarNodo(Integer.parseInt(valoresJ1[0]), Integer.parseInt(valoresJ1[1]), Integer.parseInt(valoresJ1[2]), Integer.parseInt(valoresJ1[3]));
+                            break;
+                        case "ac2":
+                            sistema.ui.VentanaConfiguracion.txtLog.append("---> Guardando movimiento jugador 2\n");
+                            String[] valoresJ2 = cuerpoMensaje[0].split(",");
+                            main.Main.arbolJugador2.modificarNodo(Integer.parseInt(valoresJ2[0]), Integer.parseInt(valoresJ2[1]), Integer.parseInt(valoresJ2[2]), Integer.parseInt(valoresJ2[3]));
+                            break;
+                    }
                     break;
                 case "1"://solicita respuesta
                     switch(contenido[0]){
