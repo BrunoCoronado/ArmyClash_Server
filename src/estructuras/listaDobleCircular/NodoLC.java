@@ -10,10 +10,10 @@ package estructuras.listaDobleCircular;
  * @author bruno
  */
 public class NodoLC {
-    Object valor;
-    int capa;
-    NodoLC anterior;
-    NodoLC siguiente;
+    public Object valor;
+    public int capa;
+    public NodoLC anterior;
+    public NodoLC siguiente;
 
     public NodoLC(Object valor, int capa) {
         this.valor = valor;

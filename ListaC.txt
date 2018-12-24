@@ -1,0 +1,14 @@
+digraph G {
+ node[shape=record];
+ rankdir=LR;c0[label="{<n>|<data> 0|<next>}"];
+c1[label="{<n>|<data> 1|<next>}"];
+c2[label="{<n>|<data> 2|<next>}"];
+c3[label="{<n>|<data> 3|<next>}"];
+c4[label="{<n>|<data> 4|<next>}"];
+c0:next -> c1:n;
+ c1:n -> c0:next;c1:next -> c2:n;
+ c2:n -> c1:next;c2:next -> c3:n;
+ c3:n -> c2:next;c3:next -> c4:n;
+ c4:n -> c3:next;c4:next -> c0:n;
+ c0:n -> c4:next;
+}

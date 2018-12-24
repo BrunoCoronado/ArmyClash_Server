@@ -61,6 +61,7 @@ public class Receptor extends Thread{
                             sistema.ui.VentanaConfiguracion.txtLog.append("---> Guardando movimiento jugador 2\n");
                             valoresJ2 = cuerpoMensaje[0].split(",");
                             main.Main.arbolJugador2.modificarNodo(Integer.parseInt(valoresJ2[0]), Integer.parseInt(valoresJ2[1]), Integer.parseInt(valoresJ2[2]), Double.parseDouble(valoresJ2[3]));
+                            
                             break;
                         case "atq1":
                             sistema.ui.VentanaConfiguracion.txtLog.append("---> Guardando ataque a jugador 1\n");
@@ -80,6 +81,17 @@ public class Receptor extends Thread{
                             sistema.ui.VentanaConfiguracion.txtLog.append("---> Guardando muerte de tropa jugador 2...\n---> Eliminanado nodo del Arbol...\n");
                             main.Main.arbolJugador2.eliminar(Integer.parseInt(cuerpoMensaje[0]));
                             break;
+                        case "cc":
+                            sistema.ui.VentanaConfiguracion.txtLog.append("---> Aumentando Contador en celda...\n");
+                            String coordenadas[] = cuerpoMensaje[0].split(",");
+                            main.Main.capas.aumentarContadorCeldaCapa(Integer.parseInt(coordenadas[0]), Integer.parseInt(coordenadas[1]), Integer.parseInt(coordenadas[2]));
+                            break;
+                        case "pf":
+                            sistema.ui.VentanaConfiguracion.txtLog.append("---> Partida Finalizada, Eliminando Arboles y Reiniciando Mapa....\n");
+                            main.Main.arbolJugador1 = null;
+                            main.Main.arbolJugador2 = null;
+                            main.Main.capas.reiniciarContadoresCapas();
+                            break;
                     }
                     break;
                 case "1"://solicita respuesta
@@ -97,8 +109,6 @@ public class Receptor extends Thread{
                     }
                     break;
             }
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
+        }catch(Exception ex){}
     }
 }

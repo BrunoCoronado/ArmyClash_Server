@@ -12,8 +12,8 @@ import estructuras.matrizDispersa.Matriz;
  * @author bruno
  */
 public class ListaDobleCircular {
-    NodoLC primero = null;
-    NodoLC ultimo = null;
+    public NodoLC primero = null;
+    public NodoLC ultimo = null;
     
     public void insertar(Object valor, int capa){
         if(primero == null){
@@ -152,8 +152,8 @@ public class ListaDobleCircular {
                 Matriz matriz = (Matriz)tmp.valor;
                 String contenidoCapa = matriz.obtenerContenido();
                 String[] valores = contenidoCapa.split("\n");
-                for(int i = 0; i < valores.length ; i++)
-                    mapa = llenarMapaCapa(valores[i], mapa);
+                for (String valore : valores) 
+                    mapa = llenarMapaCapaCliente(valore, mapa);
                 tmp = tmp.siguiente;
             }while(tmp != primero);
             filasMapa = mapa.numeroFilasMaximo();
@@ -169,10 +169,10 @@ public class ListaDobleCircular {
             NodoLC tmp = primero;
             do{
                 Matriz matriz = (Matriz)tmp.valor;
-                String contenidoCapa = matriz.obtenerContenido();
+                String contenidoCapa = matriz.obtenerContenidoConContador();
                 String[] valores = contenidoCapa.split("\n");
-                for(int i = 0; i < valores.length ; i++)
-                    mapa = llenarMapaCapa(valores[i], mapa);
+                for (String valore : valores) 
+                    mapa = llenarMapaCapa(valore, mapa);
                 tmp = tmp.siguiente;
             }while(tmp != primero);
             filasMapa = mapa.numeroFilasMaximo();
@@ -182,17 +182,32 @@ public class ListaDobleCircular {
         return null;
     }
     
-    private Matriz llenarMapaCapa(String contenido, Matriz mapa){
+    private Matriz llenarMapaCapaCliente(String contenido, Matriz mapa){
             String[] informacion = contenido.split(",");
             int columna = Integer.parseInt(informacion[1]);
             int fila = Integer.parseInt(informacion[2]);
             String valor = informacion[0];
             mapa.agregarColumna(columna);
             mapa.agregarFila(fila);
-            if(!mapa.existeCelda(valor, columna, fila)){
+            if(!mapa.existeCelda(valor, columna, fila))
                 mapa.insertarCelda(valor, columna, fila);
-            }else
+            else
                 mapa.sobrescribirCelda(valor, columna, fila);
+            return mapa;
+    }
+    
+    private Matriz llenarMapaCapa(String contenido, Matriz mapa){
+            String[] informacion = contenido.split(",");
+            int columna = Integer.parseInt(informacion[1]);
+            int fila = Integer.parseInt(informacion[2]);
+            String valor = informacion[0];
+            int contador = Integer.parseInt(informacion[3]);
+            mapa.agregarColumna(columna);
+            mapa.agregarFila(fila);
+            if(!mapa.existeCelda(valor, columna, fila))
+                mapa.insertarCelda(valor, columna, fila, contador);
+            else
+                mapa.sobrescribirCelda(valor, columna, fila, contador);
             return mapa;
     }
     
@@ -208,5 +223,27 @@ public class ListaDobleCircular {
             }while(tmp != primero);
         }
         return null;
+    }
+    
+    public void aumentarContadorCeldaCapa(int capa, int x, int y){
+        if(primero != null){
+            NodoLC tmp = primero;
+            do{
+                if(tmp.capa == capa){
+                    ((Matriz)tmp.valor).aumentarContadorCelda(x, y);
+                }
+                tmp = tmp.siguiente;
+            }while(tmp != primero);
+        }
+    }
+    
+    public void reiniciarContadoresCapas(){
+        if(primero != null){
+            NodoLC tmp = primero;
+            do{
+                ((Matriz)tmp.valor).reiniciarContadores();
+                tmp = tmp.siguiente;
+            }while(tmp != primero);
+        }
     }
 }

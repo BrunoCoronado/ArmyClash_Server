@@ -108,6 +108,76 @@ public class Matriz {
         }
     }
     
+    public void insertarCelda(Object valor, int numColumna, int numFila, int contador){//esta insercion lo pone en el lugar que deberia("ordenado")
+        NodoColumna tmpColumna = primeroColumna;
+        NodoFila tmpFila = primeroFila;
+        NodoCelda nuevo = new NodoCelda(valor, numColumna,numFila);
+        nuevo.contador = contador;
+        while(tmpColumna != null){//recorremos las cabeceras de las columnas
+            if(tmpColumna.numColumna == numColumna){//si es la columna que buscamos
+                NodoCelda tmpCelda = tmpColumna.abajo;//empezamos a recorrer los nodos que estan por debajo, buscando la fila
+                if(tmpCelda != null){//si la columna tiene celdas
+                    if(tmpCelda.numFila < numFila){
+                        NodoCelda tmpCeldaAbajo = tmpCelda.abajo;//hacemos un temporal del que esta abajo
+                        while(tmpCeldaAbajo != null){//mientras que exista alguno abajo
+                            if(tmpCeldaAbajo.numFila > numFila){//hacemos que el temporal de abajo uno despues de donde queremos insertar
+                                break;
+                            }
+                            tmpCelda = tmpCelda.abajo;
+                            tmpCeldaAbajo = tmpCelda.abajo;
+                        }//una vez posicionado donde deberia insertar, se inserta entre los nodos
+                        nuevo.arriba = tmpCelda;
+                        tmpCelda.abajo = nuevo;
+                        if(tmpCeldaAbajo != null){
+                            nuevo.abajo = tmpCeldaAbajo;
+                            tmpCeldaAbajo.arriba = nuevo;
+                        }
+                    }else{
+                        nuevo.abajo = tmpCelda;
+                        tmpCelda.arriba = nuevo;
+                        tmpColumna.abajo = nuevo;
+                    }
+                }else{
+                    tmpColumna.abajo = nuevo;
+                }
+                break;
+            }
+            tmpColumna = tmpColumna.siguiente;
+        }
+        //repetimos el codigo anterior, pero ahora para las filas
+        while(tmpFila != null){
+            if(tmpFila.numFila == numFila){
+                NodoCelda tmpCelda = tmpFila.derecha;
+                if(tmpCelda != null){
+                    if(tmpCelda.numColumna < numColumna){
+                        NodoCelda tmpCeldaDerecha = tmpCelda.derecha;
+                        while(tmpCeldaDerecha != null){
+                            if(tmpCeldaDerecha.numColumna > numColumna){
+                                break;
+                            }
+                            tmpCelda = tmpCelda.derecha;
+                            tmpCeldaDerecha = tmpCelda.derecha;
+                        }
+                        nuevo.izquierda = tmpCelda;
+                        tmpCelda.derecha = nuevo;
+                        if(tmpCeldaDerecha != null){
+                            nuevo.derecha = tmpCeldaDerecha;
+                            tmpCeldaDerecha.izquierda = nuevo;
+                        }
+                    }else{
+                        nuevo.derecha = tmpCelda;
+                        tmpCelda.izquierda = nuevo;
+                        tmpFila.derecha = nuevo;
+                    }
+                }else{
+                    tmpFila.derecha = nuevo;
+                }
+                break;
+            }
+            tmpFila = tmpFila.abajo;
+        }
+    }
+    
     public void sobrescribirCelda(Object valor, int numColumna, int numFila){
         NodoColumna tmpColumna = primeroColumna;
         while(tmpColumna != null){
@@ -116,6 +186,24 @@ public class Matriz {
                 while(tmpCelda != null){
                     if(tmpCelda.numFila == numFila){
                         tmpCelda.valor = valor;
+                    }
+                    tmpCelda = tmpCelda.abajo;
+                }
+                break;
+            }
+            tmpColumna = tmpColumna.siguiente;
+        }
+    }
+    
+    public void sobrescribirCelda(Object valor, int numColumna, int numFila, int contador){
+        NodoColumna tmpColumna = primeroColumna;
+        while(tmpColumna != null){
+            if(tmpColumna.numColumna == numColumna){
+                NodoCelda tmpCelda = tmpColumna.abajo;
+                while(tmpCelda != null){
+                    if(tmpCelda.numFila == numFila){
+                        tmpCelda.valor = valor;
+                        tmpCelda.contador = contador;
                     }
                     tmpCelda = tmpCelda.abajo;
                 }
@@ -276,6 +364,20 @@ public class Matriz {
         return contenido;
     }
     
+    public String obtenerContenidoConContador(){
+        String contenido = "";
+        NodoFila tmpFila = primeroFila;
+        while(tmpFila != null){
+            NodoCelda tmpCelda = tmpFila.derecha;
+            while(tmpCelda != null){
+                contenido += tmpCelda.valor+","+tmpCelda.numColumna+","+tmpCelda.numFila+","+tmpCelda.contador+"\n";
+                tmpCelda = tmpCelda.derecha;
+            }
+            tmpFila = tmpFila.abajo;
+        }
+        return contenido;
+    }
+    
     public int numeroFilasMaximo(){
         NodoFila tmp = primeroFila;
         while(tmp != null){
@@ -296,5 +398,35 @@ public class Matriz {
             tmp = tmp.siguiente;
         }
         return tmp.numColumna;
+    }
+    
+    public void aumentarContadorCelda(int numColumna, int numFila){
+        NodoColumna tmpColumna = primeroColumna;
+        while(tmpColumna != null){
+            if(tmpColumna.numColumna == numColumna){
+                NodoCelda tmpCelda = tmpColumna.abajo;
+                while(tmpCelda != null){
+                    if(tmpCelda.numFila == numFila){
+                        tmpCelda.contador++;
+                        break;
+                    }
+                    tmpCelda = tmpCelda.abajo;
+                }
+                break;
+            }
+            tmpColumna = tmpColumna.siguiente;
+        }
+    }
+    
+    public void reiniciarContadores(){
+        NodoFila tmpFila = primeroFila;
+        while(tmpFila != null){
+            NodoCelda tmpCelda = tmpFila.derecha;
+            while(tmpCelda != null){
+                tmpCelda.contador = 0;
+                tmpCelda = tmpCelda.derecha;
+            }
+            tmpFila = tmpFila.abajo;
+        }
     }
 }

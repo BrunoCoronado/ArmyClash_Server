@@ -8,6 +8,7 @@ package sistema.ui;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import sistema.archivos.Archivo;
 import sistema.graficos.ArbolBinario;
+import sistema.graficos.ListaCircular;
 import sistema.graficos.MatrizDispersa;
 
 /**
@@ -68,6 +69,7 @@ public class VentanaConfiguracion extends javax.swing.JFrame {
         btnReporteCapas = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         btnEliminarCapa = new javax.swing.JButton();
+        btnReporteLista = new javax.swing.JButton();
         fileChooser.getAccessibleContext().setAccessibleName("");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -134,6 +136,13 @@ public class VentanaConfiguracion extends javax.swing.JFrame {
             }
         });
 
+        btnReporteLista.setText("Ver Lista");
+        btnReporteLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteListaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -145,12 +154,17 @@ public class VentanaConfiguracion extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnGraficarArbolJ2)
                             .addComponent(btnGraficarArbolJ1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(CboxReportesMatriz, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(CboxReportesMatriz, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(50, 50, 50)
                                 .addComponent(btnReporteCapas)
-                                .addGap(35, 35, 35))))
+                                .addGap(18, 18, 18)
+                                .addComponent(btnReporteLista)
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,20 +174,21 @@ public class VentanaConfiguracion extends javax.swing.JFrame {
                                     .addComponent(jLabel3))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(CboxCargaArchivos, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(CboxCargaArchivos, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(57, 57, 57)
+                                        .addComponent(jLabel4)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnEliminarCapa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnCargarArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(84, 84, 84)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel5)
-                        .addGap(44, 44, 44)))
-                .addGap(75, 75, 75)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(btnEliminarCapa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnCargarArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -212,7 +227,8 @@ public class VentanaConfiguracion extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnGraficarArbolJ2)
-                            .addComponent(btnReporteCapas))
+                            .addComponent(btnReporteCapas)
+                            .addComponent(btnReporteLista))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -272,6 +288,7 @@ public class VentanaConfiguracion extends javax.swing.JFrame {
             matrizDispersa.graficarMatriz(main.Main.capas.obtenerMapa());
         else
             matrizDispersa.graficarMatriz(main.Main.capas.ObtenerCapa(CboxReportesMatriz.getSelectedIndex()));
+        txtLog.setText(txtLog.getText() + "Graficando Matriz 1...\n");
     }//GEN-LAST:event_btnReporteCapasActionPerformed
 
     private void btnEliminarCapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarCapaActionPerformed
@@ -280,6 +297,12 @@ public class VentanaConfiguracion extends javax.swing.JFrame {
         else
             txtLog.append("---> "+CboxCargaArchivos.getSelectedItem().toString()+" No Eliminada\n");
     }//GEN-LAST:event_btnEliminarCapaActionPerformed
+
+    private void btnReporteListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteListaActionPerformed
+        ListaCircular listaCircular = new ListaCircular();
+        listaCircular.graficarLista(main.Main.capas);
+        txtLog.setText(txtLog.getText() + "Graficando Lista de Capas...\n");
+    }//GEN-LAST:event_btnReporteListaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -324,6 +347,7 @@ public class VentanaConfiguracion extends javax.swing.JFrame {
     private javax.swing.JButton btnGraficarArbolJ1;
     private javax.swing.JButton btnGraficarArbolJ2;
     private javax.swing.JButton btnReporteCapas;
+    private javax.swing.JButton btnReporteLista;
     private javax.swing.JFileChooser fileChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
