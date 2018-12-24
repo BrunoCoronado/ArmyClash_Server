@@ -10,8 +10,8 @@ package estructuras.matrizDispersa;
  * @author bruno
  */
 public class Matriz {
-    NodoFila primeroFila;
-    NodoColumna primeroColumna;
+    public NodoFila primeroFila;
+    public NodoColumna primeroColumna;
     
     public void agregarFila(int numFila){
         if(primeroFila != null){
@@ -47,19 +47,25 @@ public class Matriz {
             if(tmpColumna.numColumna == numColumna){//si es la columna que buscamos
                 NodoCelda tmpCelda = tmpColumna.abajo;//empezamos a recorrer los nodos que estan por debajo, buscando la fila
                 if(tmpCelda != null){//si la columna tiene celdas
-                    NodoCelda tmpCeldaAbajo = tmpCelda.abajo;//hacemos un temporal del que esta abajo
-                    while(tmpCeldaAbajo != null){//mientras que exista alguno abajo
-                        if(tmpCeldaAbajo.numFila > numFila){//hacemos que el temporal de abajo uno despues de donde queremos insertar
-                            break;
+                    if(tmpCelda.numFila < numFila){
+                        NodoCelda tmpCeldaAbajo = tmpCelda.abajo;//hacemos un temporal del que esta abajo
+                        while(tmpCeldaAbajo != null){//mientras que exista alguno abajo
+                            if(tmpCeldaAbajo.numFila > numFila){//hacemos que el temporal de abajo uno despues de donde queremos insertar
+                                break;
+                            }
+                            tmpCelda = tmpCelda.abajo;
+                            tmpCeldaAbajo = tmpCelda.abajo;
+                        }//una vez posicionado donde deberia insertar, se inserta entre los nodos
+                        nuevo.arriba = tmpCelda;
+                        tmpCelda.abajo = nuevo;
+                        if(tmpCeldaAbajo != null){
+                            nuevo.abajo = tmpCeldaAbajo;
+                            tmpCeldaAbajo.arriba = nuevo;
                         }
-                        tmpCelda = tmpCelda.abajo;
-                        tmpCeldaAbajo = tmpCelda.abajo;
-                    }//una vez posicionado donde deberia insertar, se inserta entre los nodos
-                    nuevo.arriba = tmpCelda;
-                    tmpCelda.abajo = nuevo;
-                    if(tmpCeldaAbajo != null){
-                        nuevo.abajo = tmpCeldaAbajo;
-                        tmpCeldaAbajo.arriba = nuevo;
+                    }else{
+                        nuevo.abajo = tmpCelda;
+                        tmpCelda.arriba = nuevo;
+                        tmpColumna.abajo = nuevo;
                     }
                 }else{
                     tmpColumna.abajo = nuevo;
@@ -73,19 +79,25 @@ public class Matriz {
             if(tmpFila.numFila == numFila){
                 NodoCelda tmpCelda = tmpFila.derecha;
                 if(tmpCelda != null){
-                    NodoCelda tmpCeldaDerecha = tmpCelda.derecha;
-                    while(tmpCeldaDerecha != null){
-                        if(tmpCeldaDerecha.numColumna > numColumna){
-                            break;
+                    if(tmpCelda.numColumna < numColumna){
+                        NodoCelda tmpCeldaDerecha = tmpCelda.derecha;
+                        while(tmpCeldaDerecha != null){
+                            if(tmpCeldaDerecha.numColumna > numColumna){
+                                break;
+                            }
+                            tmpCelda = tmpCelda.derecha;
+                            tmpCeldaDerecha = tmpCelda.derecha;
                         }
-                        tmpCelda = tmpCelda.derecha;
-                        tmpCeldaDerecha = tmpCelda.derecha;
-                    }
-                    nuevo.izquierda = tmpCelda;
-                    tmpCelda.derecha = nuevo;
-                    if(tmpCeldaDerecha != null){
-                        nuevo.derecha = tmpCeldaDerecha;
-                        tmpCeldaDerecha.izquierda = nuevo;
+                        nuevo.izquierda = tmpCelda;
+                        tmpCelda.derecha = nuevo;
+                        if(tmpCeldaDerecha != null){
+                            nuevo.derecha = tmpCeldaDerecha;
+                            tmpCeldaDerecha.izquierda = nuevo;
+                        }
+                    }else{
+                        nuevo.derecha = tmpCelda;
+                        tmpCelda.izquierda = nuevo;
+                        tmpFila.derecha = nuevo;
                     }
                 }else{
                     tmpFila.derecha = nuevo;

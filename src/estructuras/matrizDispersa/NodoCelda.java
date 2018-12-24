@@ -10,14 +10,14 @@ package estructuras.matrizDispersa;
  * @author bruno
  */
 public class NodoCelda {
-    Object valor;
-    NodoCelda arriba;
-    NodoCelda abajo;
-    NodoCelda izquierda;
-    NodoCelda derecha;
-    int contador;
-    int numColumna;
-    int numFila;
+    public Object valor;
+    public NodoCelda arriba;
+    public NodoCelda abajo;
+    public NodoCelda izquierda;
+    public NodoCelda derecha;
+    public int contador;
+    public int numColumna;
+    public int numFila;
 
     public NodoCelda(Object contenido, int numColumna, int numFila) {
         this.valor = contenido;

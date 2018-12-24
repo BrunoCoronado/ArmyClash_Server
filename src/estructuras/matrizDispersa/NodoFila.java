@@ -10,9 +10,9 @@ package estructuras.matrizDispersa;
  * @author bruno
  */
 public class NodoFila {
-    int numFila;
-    NodoFila abajo;
-    NodoCelda derecha;
+    public int numFila;
+    public NodoFila abajo;
+    public NodoCelda derecha;
 
     public NodoFila(int numFila) {
         this.numFila = numFila;

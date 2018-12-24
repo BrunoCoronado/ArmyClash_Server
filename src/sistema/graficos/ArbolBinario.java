@@ -21,7 +21,8 @@ public class ArbolBinario {
     String relaciones = "";
     public void graficarArbol(Arbol arbol){
         try{
-            BufferedWriter writer = new BufferedWriter(new FileWriter("ABB.txt"));
+            contenido = "";relaciones = "";
+            BufferedWriter writer = new BufferedWriter(new FileWriter("ABB.txt", false));
             arb = arbol;
             writer.write("digraph G {\n");
             contenido(arb.raiz);
@@ -30,7 +31,8 @@ public class ArbolBinario {
             writer.write("}");
             writer.close();
             Runtime.getRuntime().exec("dot.exe -Tsvg ABB.txt -o ABB.svg");
-            //Runtime.getRuntime().exec("ABB.svg");
+            String [] cmd = {"cmd.exe", "/c", "start", "ABB.svg" };
+            Runtime.getRuntime().exec(cmd);
         }catch(Exception ex){
             ex.printStackTrace();
         }

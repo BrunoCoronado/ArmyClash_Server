@@ -10,9 +10,9 @@ package estructuras.matrizDispersa;
  * @author bruno
  */
 public class NodoColumna {
-    int numColumna;
-    NodoColumna siguiente;
-    NodoCelda    abajo;
+    public int numColumna;
+    public NodoColumna siguiente;
+    public NodoCelda    abajo;
 
     public NodoColumna(int numColumna) {
         this.numColumna = numColumna;

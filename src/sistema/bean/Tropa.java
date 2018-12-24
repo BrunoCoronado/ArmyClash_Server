@@ -14,7 +14,7 @@ public class Tropa {
     private String nombre;
     private int posicionX;
     private int posicionY;
-    private int vida;
+    private double vida;
     private int ataque;
     private int alcanceMovimiento;
     private int alcanceAtaque;
@@ -52,11 +52,11 @@ public class Tropa {
         this.posicionY = posicionY;
     }
 
-    public int getVida() {
+    public double getVida() {
         return vida;
     }
 
-    public void setVida(int vida) {
+    public void setVida(double vida) {
         this.vida = vida;
     }
 
@@ -107,7 +107,7 @@ public class Tropa {
         this.nombre = tipo;
         switch(nombre){
             case "infanteria":
-                alcanceMovimiento = 2;
+                alcanceMovimiento = 3;
                 vida = 50;
                 ataque = 30;
                 alcanceAtaque = 1;

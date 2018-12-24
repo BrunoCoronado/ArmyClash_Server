@@ -47,15 +47,19 @@ public class Archivo {
     
     private void llenarMapa(String contenido){//formato entrada columna,fila;tipo
         try{
+            if(contenido.contains("\uFEFF")){
+                contenido = contenido.replaceAll("\uFEFF", "");
+            }
             int columna = Integer.parseInt(contenido.substring(0, contenido.indexOf(",")));//obtenemos la columna -> obteniendo el substring antes de la coma que separa columnas-
             int fila = Integer.parseInt(contenido.substring((contenido.indexOf(",") + 1), contenido.indexOf(";")));//obtenemos la fila empezando por uno despues de la primera coma(debido a que es inclusivo el primer indice)
             String tipo = contenido.substring((contenido.indexOf(";") + 1));//obtenemos el tipo empezando por uno despues del primer ; (debido a que es inclusivo el primer indice)
             capa.agregarColumna(columna);//este metodo incluye verificacion de existencia
             capa.agregarFila(fila);//este metodo incluye verificacion de existencia
-            capa.insertarCelda(tipo, columna, fila);
+            if(!capa.existeCelda(tipo, columna, fila))
+                capa.insertarCelda(tipo, columna, fila);
         }catch(Exception ex){
             ex.printStackTrace();
-            log += "!!!ERROR AGREGANDO NODO!!!\n";
+            log += "!!!ERROR AGREGANDO NODO - ARCHIVO CON ERRORES!!!\n";
         }
     }
     
@@ -82,6 +86,9 @@ public class Archivo {
             arbol = new Arbol();
             String contenido = reader.readLine();
             while(contenido != null){
+                if(contenido.contains("\uFEFF")){
+                    contenido = contenido.replaceAll("\uFEFF", "");
+                }
                 llenarArbol(contenido);
                 contenido = reader.readLine();
             }

@@ -42,6 +42,7 @@ public class Receptor extends Thread{
                 case "0"://no solicita respuesta
                     String[] cuerpoMensaje = contenido[0].split(">");
                     Archivo archivo;
+                    String[] valoresJ2, valoresJ1;
                     switch(cuerpoMensaje[1]){
                         case "t1":
                             archivo = new Archivo();
@@ -53,13 +54,31 @@ public class Receptor extends Thread{
                             break;
                         case "ac1":
                             sistema.ui.VentanaConfiguracion.txtLog.append("---> Guardando movimiento jugador 1\n");
-                            String[] valoresJ1 = cuerpoMensaje[0].split(",");
-                            main.Main.arbolJugador1.modificarNodo(Integer.parseInt(valoresJ1[0]), Integer.parseInt(valoresJ1[1]), Integer.parseInt(valoresJ1[2]), Integer.parseInt(valoresJ1[3]));
+                            valoresJ1 = cuerpoMensaje[0].split(",");
+                            main.Main.arbolJugador1.modificarNodo(Integer.parseInt(valoresJ1[0]), Integer.parseInt(valoresJ1[1]), Integer.parseInt(valoresJ1[2]), Double.parseDouble(valoresJ1[3]));
                             break;
                         case "ac2":
                             sistema.ui.VentanaConfiguracion.txtLog.append("---> Guardando movimiento jugador 2\n");
-                            String[] valoresJ2 = cuerpoMensaje[0].split(",");
-                            main.Main.arbolJugador2.modificarNodo(Integer.parseInt(valoresJ2[0]), Integer.parseInt(valoresJ2[1]), Integer.parseInt(valoresJ2[2]), Integer.parseInt(valoresJ2[3]));
+                            valoresJ2 = cuerpoMensaje[0].split(",");
+                            main.Main.arbolJugador2.modificarNodo(Integer.parseInt(valoresJ2[0]), Integer.parseInt(valoresJ2[1]), Integer.parseInt(valoresJ2[2]), Double.parseDouble(valoresJ2[3]));
+                            break;
+                        case "atq1":
+                            sistema.ui.VentanaConfiguracion.txtLog.append("---> Guardando ataque a jugador 1\n");
+                            valoresJ1 = cuerpoMensaje[0].split(",");
+                            main.Main.arbolJugador1.modificarNodo(Integer.parseInt(valoresJ1[0]), Integer.parseInt(valoresJ1[1]), Integer.parseInt(valoresJ1[2]), Double.parseDouble(valoresJ1[3]));
+                            break;
+                        case "atq2":
+                            sistema.ui.VentanaConfiguracion.txtLog.append("---> Guardando ataque sa jugador 2\n");
+                            valoresJ2 = cuerpoMensaje[0].split(",");
+                            main.Main.arbolJugador2.modificarNodo(Integer.parseInt(valoresJ2[0]), Integer.parseInt(valoresJ2[1]), Integer.parseInt(valoresJ2[2]), Double.parseDouble(valoresJ2[3]));
+                            break;
+                        case "mrt1":
+                            sistema.ui.VentanaConfiguracion.txtLog.append("---> Guardando muerte de tropa jugador 1...\n---> Eliminanado nodo del Arbol...\n");
+                            main.Main.arbolJugador1.eliminar(Integer.parseInt(cuerpoMensaje[0]));
+                            break;
+                        case "mrt2":
+                            sistema.ui.VentanaConfiguracion.txtLog.append("---> Guardando muerte de tropa jugador 2...\n---> Eliminanado nodo del Arbol...\n");
+                            main.Main.arbolJugador2.eliminar(Integer.parseInt(cuerpoMensaje[0]));
                             break;
                     }
                     break;
@@ -79,7 +98,7 @@ public class Receptor extends Thread{
                     break;
             }
         }catch(Exception ex){
-            
+            ex.printStackTrace();
         }
     }
 }

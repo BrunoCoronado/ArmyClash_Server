@@ -1,0 +1,27 @@
+digraph G {
+nodo50[label = "ID: 50"]
+nodo20[label = "ID: 20"]
+nodo3[label = "ID: 3"]
+nodo40[label = "ID: 40"]
+nodo22[label = "ID: 22"]
+nodo35[label = "ID: 35"]
+nodo60[label = "ID: 60"]
+nodo80[label = "ID: 80"]
+nodo65[label = "ID: 65"]
+nodo78[label = "ID: 78"]
+nodo67[label = "ID: 67"]
+nodo95[label = "ID: 95"]
+nodo91[label = "ID: 91"]
+"nodo50"->"nodo20"
+"nodo20"->"nodo3"
+"nodo20"->"nodo40"
+"nodo40"->"nodo22"
+"nodo22"->"nodo35"
+"nodo50"->"nodo60"
+"nodo60"->"nodo80"
+"nodo80"->"nodo65"
+"nodo65"->"nodo78"
+"nodo78"->"nodo67"
+"nodo80"->"nodo95"
+"nodo95"->"nodo91"
+}

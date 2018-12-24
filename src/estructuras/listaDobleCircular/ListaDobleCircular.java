@@ -54,7 +54,7 @@ public class ListaDobleCircular {
         }
     }
     
-    public void eliminar(int capa){
+    public boolean eliminar(int capa){
         if(primero != null){
             NodoLC tmp = primero;
             Boolean encontrado = false;
@@ -89,8 +89,11 @@ public class ListaDobleCircular {
                         ultimo = null;
                     }
                 }
+                return true;
             }
+            return false;
         }
+        return false;
     }
     
     public void mostrar(){
@@ -160,17 +163,50 @@ public class ListaDobleCircular {
         return null;
     }
     
+    public Matriz obtenerMapa(){
+        if(primero != null){
+            Matriz mapa = new Matriz();
+            NodoLC tmp = primero;
+            do{
+                Matriz matriz = (Matriz)tmp.valor;
+                String contenidoCapa = matriz.obtenerContenido();
+                String[] valores = contenidoCapa.split("\n");
+                for(int i = 0; i < valores.length ; i++)
+                    mapa = llenarMapaCapa(valores[i], mapa);
+                tmp = tmp.siguiente;
+            }while(tmp != primero);
+            filasMapa = mapa.numeroFilasMaximo();
+            columnasMapa = mapa.numeroColumnasMaximo();
+            return mapa;
+        }
+        return null;
+    }
+    
     private Matriz llenarMapaCapa(String contenido, Matriz mapa){
             String[] informacion = contenido.split(",");
             int columna = Integer.parseInt(informacion[1]);
             int fila = Integer.parseInt(informacion[2]);
             String valor = informacion[0];
+            mapa.agregarColumna(columna);
+            mapa.agregarFila(fila);
             if(!mapa.existeCelda(valor, columna, fila)){
-                mapa.agregarColumna(columna);
-                mapa.agregarFila(fila);
                 mapa.insertarCelda(valor, columna, fila);
             }else
                 mapa.sobrescribirCelda(valor, columna, fila);
             return mapa;
+    }
+    
+    
+    public Matriz ObtenerCapa(int capa){
+        if(primero != null){
+            NodoLC tmp = primero;
+            do{
+                if(tmp.capa == capa){
+                    return (Matriz)tmp.valor;
+                }
+                tmp = tmp.siguiente;
+            }while(tmp != primero);
+        }
+        return null;
     }
 }

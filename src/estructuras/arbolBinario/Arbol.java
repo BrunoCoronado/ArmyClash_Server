@@ -40,6 +40,23 @@ public class Arbol {
         if(raiz != null){
             if(id != raiz.tropa.getId())
                 eliminar(id, raiz);
+            else{
+                if(raiz.izq == null && raiz.der == null){//verifico si es un nodo hoja, si lo es->
+                    raiz = null;//elimino la hoja
+                }else if(raiz.izq != null && raiz.der == null){//si no es una hoja y tiene hijos verificamos cada caso
+                    raiz = raiz.izq;//pasos los del nodo eliminado al padre
+                    raiz.padre = null;
+                }else if(raiz.izq == null && raiz.der != null){
+                    raiz = raiz.der;//pasos los del nodo eliminado al padre
+                    raiz.padre = null;
+                }else{
+                    NodoA predecesor = predecesor(raiz.izq);//buscamos el mayor de los menores
+                    Tropa aux = raiz.tropa;//guardamos el valor del nodo que vamos a eliminar
+                    raiz.tropa = predecesor.tropa;
+                    predecesor.tropa = aux;
+                    eliminarHijo(id, predecesor.padre.tropa.getId(), raiz);//eliminamos el nodo predecesor con el valor cambiado partiendo del padre del predecesor
+                }
+            }
         }
     }
     
@@ -53,11 +70,11 @@ public class Arbol {
                     if(eliminar.izq == null && eliminar.der == null){//verifico si es un nodo hoja, si lo es->
                         tmp.izq = null;//elimino la hoja
                     }else if(eliminar.izq != null && eliminar.der == null){//si no es una hoja y tiene hijos verificamos cada caso
-                        eliminar.izq.padre = tmp;//cambio el padre del hijo del nodo al que voy a eliminar
                         tmp.der = eliminar.izq;//pasos los del nodo eliminado al padre
+                        tmp.der.padre = tmp;//cambio el padre del hijo del nodo al que voy a eliminar
                     }else if(eliminar.izq == null && eliminar.der != null){
-                        eliminar.der.padre = tmp;//cambio el padre del hijo del nodo al que voy a eliminar
                         tmp.izq = eliminar.der;//pasos los del nodo eliminado al padre
+                        tmp.izq.padre = tmp;
                     }else{//al llegar a este punto sabemos que tiene dos hijos
                         NodoA predecesor = predecesor(eliminar.izq);//buscamos el mayor de los menores
                         Tropa aux = eliminar.tropa;//guardamos el valor del nodo que vamos a eliminar
@@ -77,8 +94,10 @@ public class Arbol {
                         tmp.der = null;//elimino la hoja
                     }else if(eliminar.izq != null && eliminar.der == null){//si no es una hoja y tiene hijos verificamos cada caso
                         tmp.der = eliminar.izq;
+                        tmp.der.padre = tmp;
                     }else if(eliminar.izq == null && eliminar.der != null){
-                        tmp.izq = eliminar.der;
+                        tmp.der = eliminar.der;
+                        tmp.der.padre = tmp;
                     }else{//al llegar a este punto sabemos que tiene dos hijos
                         NodoA predecesor = predecesor(eliminar.izq);//buscamos el mayor de los menores
                         Tropa aux = eliminar.tropa;//guardamos el valor del nodo que vamos a eliminar
@@ -105,11 +124,11 @@ public class Arbol {
                     if(eliminar.izq == null && eliminar.der == null){//verifico si es un nodo hoja, si lo es->
                         tmp.izq = null;//elimino la hoja
                     }else if(eliminar.izq != null && eliminar.der == null){//si no es una hoja y tiene hijos verificamos cada caso
-                        eliminar.izq.padre = tmp;//cambio el padre del hijo del nodo al que voy a eliminar
                         tmp.der = eliminar.izq;//pasos los del nodo eliminado al padre
+                        tmp.der.padre = tmp;//cambio el padre del hijo del nodo al que voy a eliminar
                     }else if(eliminar.izq == null && eliminar.der != null){
-                        eliminar.der.padre = tmp;//cambio el padre del hijo del nodo al que voy a eliminar
                         tmp.izq = eliminar.der;//pasos los del nodo eliminado al padre
+                        tmp.izq.padre = tmp;
                     }
                 }
             }else if(tmp.der != null){//analizamos hijo derecho
@@ -119,8 +138,10 @@ public class Arbol {
                         tmp.der = null;//elimino la hoja
                     }else if(eliminar.izq != null && eliminar.der == null){//si no es una hoja y tiene hijos verificamos cada caso
                         tmp.der = eliminar.izq;
+                        tmp.der.padre = tmp;
                     }else if(eliminar.izq == null && eliminar.der != null){
-                        tmp.izq = eliminar.der;
+                        tmp.der = eliminar.der;
+                        tmp.der.padre = tmp;
                     }
                 }
             }
@@ -133,7 +154,7 @@ public class Arbol {
         return tmp;
     }
     
-    public void modificarNodo(int id, int posX, int posY, int vida){
+    public void modificarNodo(int id, int posX, int posY, double vida){
         if(raiz != null){
             if(raiz.tropa.getId() != id)
                 modificarNodo(id, posX, posY, vida, raiz);
@@ -146,7 +167,7 @@ public class Arbol {
         }
     }
     
-    private void modificarNodo(int id, int posX, int posY, int vida, NodoA tmp){
+    private void modificarNodo(int id, int posX, int posY, double vida, NodoA tmp){
         if(id < tmp.tropa.getId()){
             if(tmp.izq != null){
                 if(tmp.izq.tropa.getId() != id){
